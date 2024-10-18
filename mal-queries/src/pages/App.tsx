@@ -3,6 +3,7 @@ import AnimeCard from "../components/AnimeCard";
 import { fetchAnime } from "../http";
 import genres from "../genre";
 import { Genre, CartoonType } from "../types";
+import { Tabs } from "../components/Tabs";
 // Type definitions for fetched anime data
 
 // Initialize a random genre based on its mal_id.
@@ -55,8 +56,13 @@ const AppPage = () => {
   return (
     <div>
       <main>
+        <h3 className="text-center text-2xl pb-4">List of Genres</h3>
+        <Tabs
+          TAB_DATA={genres}
+          setNum={setRunningNumber}
+          runningNumber={runningNumber}
+        />
         <div className="container">
-          <h1>List of Genres</h1>
           {genres.map((genre) => (
             <button
               key={genre.mal_id}
