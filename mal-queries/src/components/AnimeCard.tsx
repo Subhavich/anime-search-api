@@ -15,10 +15,6 @@ const AnimeCard: FC<AnimeCardProps> = ({
   isFetching,
   image,
 }) => {
-  function shortenText(text: string, char: number) {
-    return text.length > char ? `${text.slice(0, char)} ...` : text;
-  }
-
   return (
     <>
       {isFetching && <p>Loading Data</p>}
@@ -28,7 +24,7 @@ const AnimeCard: FC<AnimeCardProps> = ({
             <img src={image} />
           </div>
           <div className="anime-card__text">
-            <h3 className="anime-card-title">{shortenText(title, 16)}</h3>
+            <h3 className="anime-card-title">{title}</h3>
 
             <div className="anime-card-tags">
               {genres.map((genre, ind) => {
