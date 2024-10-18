@@ -57,22 +57,8 @@ const AppPage = () => {
     <div>
       <main>
         <h3 className="text-center text-2xl pb-4">List of Genres</h3>
-        <Tabs
-          TAB_DATA={genres}
-          setNum={setRunningNumber}
-          runningNumber={runningNumber}
-        />
-        <div className="container">
-          {genres.map((genre) => (
-            <button
-              key={genre.mal_id}
-              onClick={() => setRunningNumber(genre.mal_id)}
-            >
-              {genre.name}
-            </button>
-          ))}
-        </div>
-        <div className="container">
+        <Tabs TAB_DATA={genres} setNum={setRunningNumber} />
+        <div className="text-center pb-4">
           <h2>Displaying: {genre} animes</h2>
         </div>
 

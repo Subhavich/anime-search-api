@@ -2,7 +2,6 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { FC } from "react";
 interface TabDataProps {
   setNum: (runningNumber: number) => void;
-  runningNumber: number;
   TAB_DATA: Tab[];
 }
 interface Tab {
@@ -13,7 +12,7 @@ interface Tab {
 export const Tabs: FC<TabDataProps> = ({ TAB_DATA, setNum }) => {
   const [selected, setSelected] = useState(1);
   return (
-    <div className="mx-auto max-w-5xl w-10/12 lg:w-full">
+    <div className="mx-auto max-w-5xl w-10/12 lg:w-full pb-4">
       <div className="mx-0 min-w-full flex flex-wrap justify-center  auto-cols-max max-w-4xl gap-2 px-2 py-2">
         {TAB_DATA.map((t, ind) => (
           <ToggleButton
