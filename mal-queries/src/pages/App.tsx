@@ -4,6 +4,7 @@ import { fetchAnime } from "../http";
 import genres from "../genre";
 import { Genre, CartoonType } from "../types";
 import { Tabs } from "../components/Tabs";
+import CardCarousel from "../components/Carousel";
 // Type definitions for fetched anime data
 
 // Initialize a random genre based on its mal_id.
@@ -63,6 +64,7 @@ const AppPage = () => {
         </div>
 
         <section>
+          <CardCarousel />
           <div className="anime-slide">
             {isFetching ? (
               <p>Loading...</p>
