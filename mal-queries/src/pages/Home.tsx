@@ -1,5 +1,6 @@
 import AnimeCard from "../components/AnimeCard";
-
+import { UserContext } from "../store/user-context";
+import { useContext } from "react";
 const mockData = {
   mal_id: 39024,
   images: {
@@ -32,12 +33,12 @@ const mockData = {
 };
 
 const HomePage = () => {
+  const userData = useContext(UserContext);
   return (
     <>
       <main className=" max-w-5xl mx-auto  ">
         <div className="flex ">
           <AnimeCard cartoon={mockData} />
-          <div></div>
         </div>
       </main>
     </>

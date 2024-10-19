@@ -24,6 +24,7 @@ const UserContextProvider: React.FC<UserContextProviderProps> = ({
   const userValue = {
     savedAnime,
     setSavedAnime,
+    name: "KIMI",
   };
 
   return (
