@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import AnimeCard from "../components/AnimeCard";
 import { fetchAnime } from "../http";
 import genres from "../genre";
 import { Genre, CartoonType } from "../types";
@@ -20,20 +19,19 @@ if (!initGenre) {
 const AppPage = () => {
   const [runningNumber, setRunningNumber] = useState(randNum);
   const [cartoons, setCartoons] = useState<CartoonType[]>([]);
-  const [isFetching, setIsFetching] = useState(false);
+  // const [isFetching, setIsFetching] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [genre, setGenre] = useState<string>(initGenre.name);
 
   useEffect(() => {
     async function fetchCartoons() {
-      setIsFetching(true);
+      // setIsFetching(true);
       setError(null);
 
       try {
         const resData = await fetchAnime(runningNumber);
         const animeList: CartoonType[] = resData.data;
         setCartoons(animeList);
-
         const newGenre = genres.find((genre) => genre.mal_id === runningNumber);
         if (!newGenre) {
           throw new Error("Genre not found for the selected ID");
@@ -43,7 +41,7 @@ const AppPage = () => {
         setError("Could not fetch cartoons. Please try again later.");
         setCartoons([]);
       } finally {
-        setIsFetching(false);
+        // setIsFetching(false);
       }
     }
 
@@ -64,38 +62,7 @@ const AppPage = () => {
         </div>
 
         <section>
-          <CardCarousel />
-          <div className="anime-slide">
-            {isFetching ? (
-              <p>Loading...</p>
-            ) : cartoons.length === 0 ? (
-              <p>No Data</p>
-            ) : (
-              cartoons.map((cartoon) => {
-                const { mal_id, images, title, score, year, genres } = cartoon;
-
-                // Map the genres to match the expected Genre type
-                const formattedGenres: Genre[] = genres.map((g) => ({
-                  mal_id: g.mal_id,
-                  name: g.name,
-                  url: "", // Default or placeholder value for 'url'
-                  count: 0, // Default or placeholder value for 'count'
-                }));
-
-                return (
-                  <AnimeCard
-                    key={mal_id}
-                    image={images.webp.image_url}
-                    title={title}
-                    score={score}
-                    year={year}
-                    genres={formattedGenres} // Pass the formatted genres
-                    isFetching={isFetching}
-                  />
-                );
-              })
-            )}
-          </div>
+          <CardCarousel cartoons={cartoons} />
         </section>
       </main>
     </div>

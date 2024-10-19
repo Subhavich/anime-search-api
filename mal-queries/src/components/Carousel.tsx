@@ -1,7 +1,8 @@
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { FC, useState } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import useMeasure from "react-use-measure";
+import { CartoonType } from "../types";
 
 const CARD_WIDTH = 240;
 const CARD_HEIGHT = 360;
@@ -13,17 +14,18 @@ const BREAKPOINTS = {
   lg: 1024,
 };
 
-const CardCarousel = () => {
+const CardCarousel: FC<{ cartoons: CartoonType[] }> = ({ cartoons }) => {
   const [ref, { width }] = useMeasure();
   const [offset, setOffset] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const CARD_BUFFER =
-    width > BREAKPOINTS.lg ? 3 : width > BREAKPOINTS.sm ? 2 : 1;
+    width > BREAKPOINTS.lg ? 4 : width > BREAKPOINTS.sm ? 2 : 1;
 
   const CAN_SHIFT_LEFT = offset < 0;
 
   const CAN_SHIFT_RIGHT =
-    Math.abs(offset) < CARD_SIZE * (items.length - CARD_BUFFER);
+    Math.abs(offset) < CARD_SIZE * (cartoons.length - CARD_BUFFER);
 
   const shiftLeft = () => {
     if (!CAN_SHIFT_LEFT) {
@@ -39,55 +41,90 @@ const CardCarousel = () => {
     setOffset((pv) => (pv -= CARD_SIZE));
   };
 
-  return (
-    <section className="" ref={ref}>
-      <div className="relative overflow-hidden p-4">
-        {/* CARDS */}
-        <div className="mx-auto max-w-6xl">
-          <p className="mb-4 text-2xl font-semibold">
-            Everything. <span className="text-slate-500">Yes, even that.</span>
-          </p>
-          <motion.div
-            animate={{
-              x: offset,
-            }}
-            className="flex"
-          >
-            {items.map((item) => {
-              return <Card key={item.id} {...item} />;
-            })}
-          </motion.div>
-        </div>
+  const moveToCard = (index: number) => {
+    const newOffset = -index * CARD_SIZE;
+    setOffset(newOffset);
+  };
 
-        {/* BUTTONS */}
-        <>
-          <motion.button
-            initial={false}
-            animate={{
-              x: CAN_SHIFT_LEFT ? "0%" : "-100%",
-            }}
-            className="absolute left-0 top-[60%] z-30 rounded-r-xl bg-slate-100/30 p-3 pl-2 text-4xl text-white backdrop-blur-sm transition-[padding] hover:pl-3"
-            onClick={shiftLeft}
-          >
-            <FiChevronLeft />
-          </motion.button>
-          <motion.button
-            initial={false}
-            animate={{
-              x: CAN_SHIFT_RIGHT ? "0%" : "100%",
-            }}
-            className="absolute right-0 top-[60%] z-30 rounded-l-xl bg-slate-100/30 p-3 pr-2 text-4xl text-white backdrop-blur-sm transition-[padding] hover:pr-3"
-            onClick={shiftRight}
-          >
-            <FiChevronRight />
-          </motion.button>
-        </>
-      </div>
-    </section>
+  return (
+    <AnimatePresence>
+      <section className="bg-rose-200" ref={ref}>
+        <motion.div
+          className="relative overflow-hidden p-4"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 50 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+          {/* CARDS */}
+          <div className="mx-auto max-w-6xl">
+            <p className="mb-4 text-2xl font-semibold">
+              Everything.{" "}
+              <span className="text-slate-500">Yes, even that.</span>
+            </p>
+            <motion.div
+              animate={{
+                x: offset,
+              }}
+              className="flex"
+            >
+              {cartoons.map((cartoon, ind) => (
+                <motion.div
+                  key={cartoon.mal_id}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{
+                    duration: 0.5,
+                    ease: "easeOut",
+                    delay: ind * 0.1,
+                  }}
+                >
+                  <Card
+                    {...cartoon}
+                    onClick={() => {
+                      setSelectedIndex(ind);
+                      moveToCard(ind);
+                    }}
+                  />
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* BUTTONS */}
+          <>
+            <motion.button
+              initial={false}
+              animate={{
+                x: CAN_SHIFT_LEFT ? "0%" : "-100%",
+              }}
+              className="absolute left-0 top-[60%] z-30 rounded-r-xl bg-slate-100/30 p-3 pl-2 text-4xl text-white backdrop-blur-sm transition-[padding] hover:pl-3"
+              onClick={shiftLeft}
+            >
+              <FiChevronLeft />
+            </motion.button>
+            <motion.button
+              initial={false}
+              animate={{
+                x: CAN_SHIFT_RIGHT ? "0%" : "100%",
+              }}
+              className="absolute right-0 top-[60%] z-30 rounded-l-xl bg-slate-100/30 p-3 pr-2 text-4xl text-white backdrop-blur-sm transition-[padding] hover:pr-3"
+              onClick={shiftRight}
+            >
+              <FiChevronRight />
+            </motion.button>
+          </>
+        </motion.div>
+      </section>
+    </AnimatePresence>
   );
 };
+interface CardProps extends CartoonType {
+  onClick: () => void;
+}
 
-const Card = ({ url, category, title, description }: ItemType) => {
+const Card = ({ images, title, score, year, onClick }: CardProps) => {
   return (
     <div
       className="relative shrink-0 cursor-pointer rounded-2xl bg-black shadow-md transition-all hover:scale-[1.015] hover:shadow-xl"
@@ -95,87 +132,21 @@ const Card = ({ url, category, title, description }: ItemType) => {
         width: CARD_WIDTH,
         height: CARD_HEIGHT,
         marginRight: MARGIN,
-        backgroundImage: `url(${url})`,
+        backgroundImage: `url(${images.webp.image_url})`,
         backgroundPosition: "center",
         backgroundSize: "cover",
       }}
+      onClick={onClick}
     >
       <div className="absolute inset-0 z-20 rounded-2xl bg-gradient-to-b from-black/90 via-black/60 to-black/0 p-6 text-white transition-[backdrop-filter] hover:backdrop-blur-sm">
         <span className="text-xs font-semibold uppercase text-violet-300">
-          {category}
+          {year}
         </span>
         <p className="my-2 text-3xl font-bold">{title}</p>
-        <p className="text-lg text-slate-300">{description}</p>
+        <p className="text-lg text-slate-300">{score}</p>
       </div>
     </div>
   );
 };
 
 export default CardCarousel;
-
-type ItemType = {
-  id: number;
-  url: string;
-  category: string;
-  title: string;
-  description: string;
-};
-
-const items: ItemType[] = [
-  {
-    id: 1,
-    url: "/imgs/computer/mouse.png",
-    category: "Mice",
-    title: "Just feels right",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, dolor.",
-  },
-  {
-    id: 2,
-    url: "/imgs/computer/keyboard.png",
-    category: "Keyboards",
-    title: "Type in style",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, dolor.",
-  },
-  {
-    id: 3,
-    url: "/imgs/computer/monitor.png",
-    category: "Monitors",
-    title: "Looks like a win",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, dolor.",
-  },
-  {
-    id: 4,
-    url: "/imgs/computer/chair.png",
-    category: "Chairs",
-    title: "Back feels great",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, dolor.",
-  },
-  {
-    id: 5,
-    url: "/imgs/computer/lights.png",
-    category: "Lights",
-    title: "It's lit",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, dolor.",
-  },
-  {
-    id: 6,
-    url: "/imgs/computer/desk.png",
-    category: "Desks",
-    title: "Stand up straight",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, dolor.",
-  },
-  {
-    id: 7,
-    url: "/imgs/computer/headphones.png",
-    category: "Headphones",
-    title: "Sounds good",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, dolor.",
-  },
-];
