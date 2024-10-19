@@ -48,7 +48,7 @@ const CardCarousel: FC<{ cartoons: CartoonType[] }> = ({ cartoons }) => {
 
   return (
     <AnimatePresence>
-      <section className="bg-rose-200" ref={ref}>
+      <section className="" ref={ref}>
         <motion.div
           className="relative overflow-hidden p-4"
           initial={{ opacity: 0, y: 50 }}
@@ -71,9 +71,9 @@ const CardCarousel: FC<{ cartoons: CartoonType[] }> = ({ cartoons }) => {
               {cartoons.map((cartoon, ind) => (
                 <motion.div
                   key={cartoon.mal_id}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 1 }}
+                  exit={{ opacity: 0, x: 20 }}
                   transition={{
                     duration: 0.5,
                     ease: "easeOut",
@@ -127,7 +127,7 @@ interface CardProps extends CartoonType {
 const Card = ({ images, title, score, year, onClick }: CardProps) => {
   return (
     <div
-      className="relative shrink-0 cursor-pointer rounded-2xl bg-black shadow-md transition-all hover:scale-[1.015] hover:shadow-xl"
+      className="relative shrink-0 overflow-clip cursor-pointer rounded-2xl border border-neutral-500 bg-black shadow-md transition-all hover:scale-[1.05] hover:shadow-xl"
       style={{
         width: CARD_WIDTH,
         height: CARD_HEIGHT,
@@ -138,8 +138,8 @@ const Card = ({ images, title, score, year, onClick }: CardProps) => {
       }}
       onClick={onClick}
     >
-      <div className="absolute inset-0 z-20 rounded-2xl bg-gradient-to-b from-black/90 via-black/60 to-black/0 p-6 text-white transition-[backdrop-filter] hover:backdrop-blur-sm">
-        <span className="text-xs font-semibold uppercase text-violet-300">
+      <div className="absolute  inset-0 z-20 rounded-2xl bg-black opacity-80 p-6 text-white transition-[backdrop-filter]">
+        <span className="text-xs font-semibold uppercase text-neutral-300">
           {year}
         </span>
         <p className="my-2 text-3xl font-bold">{title}</p>
