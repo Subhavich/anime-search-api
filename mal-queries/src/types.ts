@@ -24,5 +24,6 @@ export type CartoonType = {
   score: number;
   year: number;
   genres: GenreType[];
+  synopsis:string
 };
 

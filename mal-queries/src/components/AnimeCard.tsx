@@ -1,45 +1,81 @@
-import { FC } from "react";
-import { Genre } from "../types";
+import { FC, useRef } from "react";
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useSpring,
+} from "framer-motion";
 
-interface AnimeCardProps {
-  title: string;
-  genres: Genre[];
-  isFetching: boolean;
-  image: string;
-  score: number;
-  year: number;
-}
-const AnimeCard: FC<AnimeCardProps> = ({
-  title,
-  genres,
-  isFetching,
-  image,
-}) => {
+import { CartoonType } from "../types";
+
+// backgroundImage: `url(${images.webp.image_url})`,
+
+const ROTATION_RANGE = 32.5;
+const HALF_ROTATION_RANGE = 32.5 / 2;
+
+const TiltCard: FC<{ cartoon: CartoonType }> = ({ cartoon }) => {
+  const { images, title, score, synopsis } = cartoon;
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const xSpring = useSpring(x);
+  const ySpring = useSpring(y);
+
+  const transform = useMotionTemplate`rotateX(${xSpring}deg) rotateY(${ySpring}deg)`;
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!ref.current) return [0, 0];
+
+    const rect = ref.current.getBoundingClientRect();
+
+    const width = rect.width;
+    const height = rect.height;
+
+    const mouseX = (e.clientX - rect.left) * ROTATION_RANGE;
+    const mouseY = (e.clientY - rect.top) * ROTATION_RANGE;
+
+    const rX = (mouseY / height - HALF_ROTATION_RANGE) * -1;
+    const rY = mouseX / width - HALF_ROTATION_RANGE;
+
+    x.set(rX);
+    y.set(rY);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
   return (
-    <>
-      {isFetching && <p>Loading Data</p>}
-      {!isFetching && (
-        <div className="anime-card">
-          <div className="anime-card__image">
-            <img src={image} />
-          </div>
-          <div className="anime-card__text">
-            <h3 className="anime-card-title">{title}</h3>
-
-            <div className="anime-card-tags">
-              {genres.map((genre, ind) => {
-                return (
-                  <p key={ind} className="anime-card-genre">
-                    {genre.name}
-                  </p>
-                );
-              })}
-            </div>
-          </div>
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transformStyle: "preserve-3d",
+        transform,
+      }}
+      className="relative h-96 w-72 rounded-xl bg-neutral-800"
+    >
+      <div
+        style={{
+          backgroundImage: `url(${images.webp.image_url})`,
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+          transform: "translateZ(75px)",
+          transformStyle: "preserve-3d",
+        }}
+        className="absolute inset-1 grid place-content-center rounded-xl bg-white shadow-lg"
+      >
+        <div className="p-4 absolute inset-0 bg-black rounded-xl z-10 opacity-60 flex flex-col">
+          <p>{title}</p>
         </div>
-      )}
-    </>
+      </div>
+    </motion.div>
   );
 };
 
-export default AnimeCard;
+export default TiltCard;
