@@ -36,6 +36,7 @@ const CardCarousel: FC<{
       return;
     }
     setOffset((pv) => (pv += CARD_SIZE));
+    setSelectedIndex((pv) => pv - 1);
   };
 
   const shiftRight = () => {
@@ -43,6 +44,7 @@ const CardCarousel: FC<{
       return;
     }
     setOffset((pv) => (pv -= CARD_SIZE));
+    setSelectedIndex((pv) => pv + 1);
   };
 
   const moveToCard = (index: number) => {
@@ -56,6 +58,7 @@ const CardCarousel: FC<{
   useEffect(() => {
     setTimeout(() => {
       reset();
+      setSelectedIndex(0);
     }, 500);
   }, [runningNumber]);
 
@@ -96,6 +99,7 @@ const CardCarousel: FC<{
                     }}
                   >
                     <Card
+                      selects={selectedIndex === ind}
                       {...cartoon}
                       onClick={() => {
                         setSelectedIndex(ind);
@@ -138,9 +142,10 @@ const CardCarousel: FC<{
 };
 interface CardProps extends CartoonType {
   onClick: () => void;
+  selects: boolean;
 }
 
-const Card = ({ images, title, score, year, onClick }: CardProps) => {
+const Card = ({ images, title, score, year, onClick, selects }: CardProps) => {
   return (
     <div
       className="relative shrink-0 break-words cursor-pointer rounded-2xl border border-neutral-500 bg-black shadow-md transition-all hover:scale-[1.05] hover:shadow-xl"
@@ -151,6 +156,7 @@ const Card = ({ images, title, score, year, onClick }: CardProps) => {
         backgroundImage: `url(${images.webp.image_url})`,
         backgroundPosition: "center",
         backgroundSize: "cover",
+        transform: selects ? "scale(1.08)" : undefined,
       }}
       onClick={onClick}
     >
