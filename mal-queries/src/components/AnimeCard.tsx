@@ -68,11 +68,9 @@ const TiltCard: FC<{ cartoon: CartoonType }> = ({ cartoon }) => {
           transform: "translateZ(75px)",
           transformStyle: "preserve-3d",
         }}
-        className="absolute inset-1 grid place-content-center rounded-xl bg-white shadow-lg"
+        className="absolute inset-3 grid place-content-center rounded-xl bg-white shadow-lg"
       >
-        <div className="p-4 absolute inset-0 bg-black rounded-xl z-10 opacity-60 flex flex-col">
-          <p>{title}</p>
-        </div>
+        <div className="p-4 absolute inset-0 bg-black rounded-xl z-10 opacity-60 flex flex-col"></div>
       </div>
     </motion.div>
   );

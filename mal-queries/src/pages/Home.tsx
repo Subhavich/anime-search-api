@@ -33,28 +33,30 @@ import { CartoonType } from "../types";
 //   score: 8.0,
 //   year: 2024,
 // };
-
 const HomePage = () => {
-  const userData = useContext(UserContext);
   const [randomAnime, setRandomAnime] = useState<CartoonType | null>();
   const [isFetching, setIsFetching] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [loaded, setLoaded] = useState<boolean>(false);
 
   const fetchRandom = async () => {
     setIsFetching(true);
     setError(null);
-    try {
-      const resData = await fetchRandomAnime();
-      const anime: CartoonType = resData.data;
-      setRandomAnime(anime);
-    } catch (err) {
-      setError("Cannot Fetch Random Animes");
-      setRandomAnime(null);
-    } finally {
-      setIsFetching(false);
-      setLoaded(true);
+
+    let anime: CartoonType | null = null;
+
+    while (!anime || !anime.synopsis) {
+      try {
+        const resData = await fetchRandomAnime();
+        anime = resData.data;
+      } catch (err) {
+        setError("Cannot Fetch Random Animes");
+        anime = null;
+        break; // Exit loop on error
+      }
     }
+
+    setRandomAnime(anime);
+    setIsFetching(false);
   };
 
   useEffect(() => {
@@ -62,14 +64,32 @@ const HomePage = () => {
   }, []);
 
   return (
-    <>
-      <main className=" max-w-5xl mx-auto  ">
-        <div className="flex">
-          {loaded && <AnimeCard cartoon={randomAnime} />}
-          <button onClick={fetchRandom}>GET RANDOM ANIME</button>
+    <main className="max-w-5xl mx-auto">
+      <div className="grid grid-cols-12 ">
+        <div className="grid col-span-4">
+          {isFetching && (
+            <p className="w-72 h-full text-center text-2xl font-semibold text-neutral-500 animate-bounce">
+              Loading ...
+            </p>
+          )}
+          {!isFetching && randomAnime && <AnimeCard cartoon={randomAnime} />}
         </div>
-      </main>
-    </>
+        <div className="grid col-span-8 px-2 ">
+          {randomAnime && (
+            <div className="flex flex-col justify-start">
+              <p className="text-2xl">{randomAnime.title}</p>
+              <p className="line-clamp-4">{randomAnime.synopsis}</p>
+            </div>
+          )}
+          <button
+            className="max-w-48 border border-neutral-500 text-lg rounded-lg text-neutral-500"
+            onClick={fetchRandom}
+          >
+            Get Random Anime
+          </button>
+        </div>
+      </div>
+    </main>
   );
 };
 
