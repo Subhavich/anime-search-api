@@ -14,10 +14,11 @@ const BREAKPOINTS = {
   lg: 1024,
 };
 
-const CardCarousel: FC<{ cartoons: CartoonType[]; runningNumber: number }> = ({
-  cartoons,
-  runningNumber,
-}) => {
+const CardCarousel: FC<{
+  cartoons: CartoonType[];
+  runningNumber: number;
+  isFetching: boolean;
+}> = ({ cartoons, runningNumber, isFetching }) => {
   const [ref, { width }] = useMeasure();
   const [offset, setOffset] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -60,70 +61,77 @@ const CardCarousel: FC<{ cartoons: CartoonType[]; runningNumber: number }> = ({
 
   return (
     <AnimatePresence>
-      <section className="" ref={ref}>
-        <motion.div
-          className="relative overflow-hidden p-4"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 50 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-        >
-          {/* CARDS */}
-          <div className="mx-auto max-w-6xl">
-            <motion.div
-              animate={{
-                x: offset,
-              }}
-              className="flex"
-            >
-              {cartoons.map((cartoon, ind) => (
-                <motion.div
-                  key={cartoon.mal_id}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 1 }}
-                  exit={{ opacity: 0, x: 20 }}
-                  transition={{
-                    duration: 0.5,
-                    ease: "easeOut",
-                    delay: ind * 0.1,
-                  }}
-                >
-                  <Card
-                    {...cartoon}
-                    onClick={() => {
-                      setSelectedIndex(ind);
-                      moveToCard(ind);
+      <section className="min-h-96" ref={ref}>
+        {isFetching && (
+          <p className="pt-32 w-full text-center text-2xl font-semibold text-neutral-500 animate-bounce mx-auto max-w-6xl">
+            Loading ...
+          </p>
+        )}
+        {!isFetching && (
+          <motion.div
+            className="relative overflow-hidden p-4"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          >
+            {/* CARDS */}
+            <div className="mx-auto max-w-6xl">
+              <motion.div
+                animate={{
+                  x: offset,
+                }}
+                className="flex"
+              >
+                {cartoons.map((cartoon, ind) => (
+                  <motion.div
+                    key={cartoon.mal_id}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 1 }}
+                    exit={{ opacity: 0, x: 20 }}
+                    transition={{
+                      duration: 0.5,
+                      ease: "easeOut",
+                      delay: ind * 0.1,
                     }}
-                  />
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
+                  >
+                    <Card
+                      {...cartoon}
+                      onClick={() => {
+                        setSelectedIndex(ind);
+                        moveToCard(ind);
+                      }}
+                    />
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
 
-          {/* BUTTONS */}
-          <>
-            <motion.button
-              initial={false}
-              animate={{
-                x: CAN_SHIFT_LEFT ? "0%" : "-100%",
-              }}
-              className="absolute left-0 top-[60%] z-30 rounded-r-xl bg-slate-100/30 p-3 pl-2 text-4xl text-white backdrop-blur-sm transition-[padding] hover:pl-3"
-              onClick={shiftLeft}
-            >
-              <FiChevronLeft />
-            </motion.button>
-            <motion.button
-              initial={false}
-              animate={{
-                x: CAN_SHIFT_RIGHT ? "0%" : "100%",
-              }}
-              className="absolute right-0 top-[60%] z-30 rounded-l-xl bg-slate-100/30 p-3 pr-2 text-4xl text-white backdrop-blur-sm transition-[padding] hover:pr-3"
-              onClick={shiftRight}
-            >
-              <FiChevronRight />
-            </motion.button>
-          </>
-        </motion.div>
+            {/* BUTTONS */}
+            <>
+              <motion.button
+                initial={false}
+                animate={{
+                  x: CAN_SHIFT_LEFT ? "0%" : "-100%",
+                }}
+                className="absolute left-0 top-[60%] z-30 rounded-r-xl bg-slate-100/30 p-3 pl-2 text-4xl text-white backdrop-blur-sm transition-[padding] hover:pl-3"
+                onClick={shiftLeft}
+              >
+                <FiChevronLeft />
+              </motion.button>
+              <motion.button
+                initial={false}
+                animate={{
+                  x: CAN_SHIFT_RIGHT ? "0%" : "100%",
+                }}
+                className="absolute right-0 top-[60%] z-30 rounded-l-xl bg-slate-100/30 p-3 pr-2 text-4xl text-white backdrop-blur-sm transition-[padding] hover:pr-3"
+                onClick={shiftRight}
+              >
+                <FiChevronRight />
+              </motion.button>
+            </>
+          </motion.div>
+        )}
       </section>
     </AnimatePresence>
   );

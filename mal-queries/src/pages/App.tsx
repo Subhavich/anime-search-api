@@ -12,7 +12,7 @@ let randNum = Math.floor(Math.random() * 75);
 const AppPage = () => {
   const [runningNumber, setRunningNumber] = useState(randNum);
   const [cartoons, setCartoons] = useState<CartoonType[]>([]);
-  // const [isFetching, setIsFetching] = useState<boolean>(false);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [genre, setGenre] = useState<string>("");
   useEffect(() => {
@@ -24,7 +24,7 @@ const AppPage = () => {
       if (!initGenre) {
         throw new Error("RNG failed to find a matching genre");
       }
-      // setIsFetching(true);
+      setIsFetching(true);
       setError(null);
 
       try {
@@ -40,7 +40,7 @@ const AppPage = () => {
         setError("Could not fetch cartoons. Please try again later.");
         setCartoons([]);
       } finally {
-        // setIsFetching(false);
+        setIsFetching(false);
       }
     }
 
@@ -66,7 +66,11 @@ const AppPage = () => {
             Displaying Top <span className="text-slate-500">{genre}</span>{" "}
             animes.
           </p>
-          <CardCarousel cartoons={cartoons} runningNumber={runningNumber} />
+          <CardCarousel
+            cartoons={cartoons}
+            isFetching={isFetching}
+            runningNumber={runningNumber}
+          />
         </section>
       </main>
     </div>
