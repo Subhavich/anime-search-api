@@ -1,6 +1,8 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { FC } from "react";
+import genres from "../genre";
 interface TabDataProps {
+  runningNumber: number;
   setNum: (runningNumber: number) => void;
   TAB_DATA: Tab[];
 }
@@ -9,23 +11,28 @@ interface Tab {
   mal_id: number;
 }
 
-export const Tabs: FC<TabDataProps> = ({ TAB_DATA, setNum }) => {
-  const [selected, setSelected] = useState(1);
+export const Tabs: FC<TabDataProps> = ({ TAB_DATA, setNum, runningNumber }) => {
+  const [selected, setSelected] = useState(
+    genres.findIndex((ele) => ele.mal_id === runningNumber)
+  );
+  useEffect(() => {}, [runningNumber]);
   return (
     <div className="mx-auto max-w-5xl w-10/12 lg:w-full pb-4">
       <div className="mx-0 min-w-full flex flex-wrap justify-center  auto-cols-max max-w-4xl gap-2 px-2 py-2">
-        {TAB_DATA.map((t, ind) => (
-          <ToggleButton
-            key={ind}
-            id={ind}
-            selected={selected}
-            setSelected={setSelected}
-            setNum={setNum}
-            mal_id={t.mal_id}
-          >
-            {t.name}
-          </ToggleButton>
-        ))}
+        {TAB_DATA.map((t, ind) => {
+          return (
+            <ToggleButton
+              key={ind}
+              id={ind}
+              selected={selected}
+              setSelected={setSelected}
+              setNum={setNum}
+              mal_id={t.mal_id}
+            >
+              {t.name}
+            </ToggleButton>
+          );
+        })}
       </div>
     </div>
   );

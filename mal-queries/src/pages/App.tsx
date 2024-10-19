@@ -8,23 +8,22 @@ import CardCarousel from "../components/Carousel";
 
 // Initialize a random genre based on its mal_id.
 let randNum = Math.floor(Math.random() * 75);
-const initGenre: Genre | undefined = genres.find(
-  (genre) => genre.mal_id === randNum
-);
-
-if (!initGenre) {
-  throw new Error("RNG failed to find a matching genre");
-}
 
 const AppPage = () => {
   const [runningNumber, setRunningNumber] = useState(randNum);
   const [cartoons, setCartoons] = useState<CartoonType[]>([]);
   // const [isFetching, setIsFetching] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [genre, setGenre] = useState<string>(initGenre.name);
-
+  const [genre, setGenre] = useState<string>("");
   useEffect(() => {
     async function fetchCartoons() {
+      const initGenre: Genre | undefined = genres.find(
+        (genre) => genre.mal_id === randNum
+      );
+
+      if (!initGenre) {
+        throw new Error("RNG failed to find a matching genre");
+      }
       // setIsFetching(true);
       setError(null);
 
@@ -56,7 +55,11 @@ const AppPage = () => {
     <div>
       <main>
         <h3 className="text-center text-2xl pb-4">List of Genres</h3>
-        <Tabs TAB_DATA={genres} setNum={setRunningNumber} />
+        <Tabs
+          TAB_DATA={genres}
+          setNum={setRunningNumber}
+          runningNumber={runningNumber}
+        />
         <div className="text-center pb-4">
           <h2>Displaying: {genre} animes</h2>
         </div>
