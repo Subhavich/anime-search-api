@@ -60,12 +60,13 @@ const AppPage = () => {
           setNum={setRunningNumber}
           runningNumber={runningNumber}
         />
-        <div className="text-center pb-4">
-          <h2>Displaying: {genre} animes</h2>
-        </div>
 
         <section>
-          <CardCarousel cartoons={cartoons} />
+          <p className="mb-4 text-2xl mx-auto max-w-6xl font-semibold">
+            Displaying Top <span className="text-slate-500">{genre}</span>{" "}
+            animes.
+          </p>
+          <CardCarousel cartoons={cartoons} runningNumber={runningNumber} />
         </section>
       </main>
     </div>

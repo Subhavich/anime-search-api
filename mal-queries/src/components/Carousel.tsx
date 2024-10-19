@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import useMeasure from "react-use-measure";
 import { CartoonType } from "../types";
@@ -14,7 +14,10 @@ const BREAKPOINTS = {
   lg: 1024,
 };
 
-const CardCarousel: FC<{ cartoons: CartoonType[] }> = ({ cartoons }) => {
+const CardCarousel: FC<{ cartoons: CartoonType[]; runningNumber: number }> = ({
+  cartoons,
+  runningNumber,
+}) => {
   const [ref, { width }] = useMeasure();
   const [offset, setOffset] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -45,6 +48,15 @@ const CardCarousel: FC<{ cartoons: CartoonType[] }> = ({ cartoons }) => {
     const newOffset = -index * CARD_SIZE;
     setOffset(newOffset);
   };
+  const reset = () => {
+    setOffset(0);
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      reset();
+    }, 500);
+  }, [runningNumber]);
 
   return (
     <AnimatePresence>
@@ -58,10 +70,6 @@ const CardCarousel: FC<{ cartoons: CartoonType[] }> = ({ cartoons }) => {
         >
           {/* CARDS */}
           <div className="mx-auto max-w-6xl">
-            <p className="mb-4 text-2xl font-semibold">
-              Everything.{" "}
-              <span className="text-slate-500">Yes, even that.</span>
-            </p>
             <motion.div
               animate={{
                 x: offset,
@@ -127,7 +135,7 @@ interface CardProps extends CartoonType {
 const Card = ({ images, title, score, year, onClick }: CardProps) => {
   return (
     <div
-      className="relative shrink-0 overflow-clip cursor-pointer rounded-2xl border border-neutral-500 bg-black shadow-md transition-all hover:scale-[1.05] hover:shadow-xl"
+      className="relative shrink-0 break-words cursor-pointer rounded-2xl border border-neutral-500 bg-black shadow-md transition-all hover:scale-[1.05] hover:shadow-xl"
       style={{
         width: CARD_WIDTH,
         height: CARD_HEIGHT,
@@ -138,11 +146,11 @@ const Card = ({ images, title, score, year, onClick }: CardProps) => {
       }}
       onClick={onClick}
     >
-      <div className="absolute  inset-0 z-20 rounded-2xl bg-black opacity-80 p-6 text-white transition-[backdrop-filter]">
+      <div className="absolute flex flex-col inset-0 z-20 rounded-2xl bg-black opacity-80 p-6 text-white transition-[backdrop-filter]">
         <span className="text-xs font-semibold uppercase text-neutral-300">
           {year}
         </span>
-        <p className="my-2 text-3xl font-bold">{title}</p>
+        <p className="my-2 text-2xl font-bold">{title}</p>
         <p className="text-lg text-slate-300">{score}</p>
       </div>
     </div>
