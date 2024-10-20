@@ -226,7 +226,8 @@ const Card = ({
           <AnimeDetailModal
             isOpen={isOpen}
             setIsOpen={setIsOpen}
-            title="title"
+            title={title}
+            synopsis={synopsis}
           />
         </div>
       )}
