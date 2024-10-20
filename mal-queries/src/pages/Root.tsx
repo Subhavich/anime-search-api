@@ -1,6 +1,8 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { FC } from "react";
 import { motion } from "framer-motion";
+import { useContext } from "react";
+import { UserContext, UserContextType } from "../store/user-context";
 
 const RootLayout = () => {
   return (
@@ -52,6 +54,13 @@ const Navigation: FC<NavigationProps> = ({ children, route = "" }) => {
 };
 
 const JoinButton = () => {
+  const userData: UserContextType | undefined = useContext(UserContext);
+  let quantity;
+  if (!userData || userData.savedAnime.length === 0) {
+    quantity = "";
+  } else {
+    quantity = "(" + userData.savedAnime.length.toString() + ")";
+  }
   return (
     <button
       className={`
@@ -68,9 +77,10 @@ const JoinButton = () => {
 
           hover:scale-105 hover:border-neutral-50 hover:text-neutral-900
           hover:before:translate-y-[0%]
-          active:scale-100`}
+          active:scale-100
+          `}
     >
-      Join waitlist
+      My List <p>{quantity}</p>
     </button>
   );
 };

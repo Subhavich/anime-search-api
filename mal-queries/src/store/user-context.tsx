@@ -1,7 +1,7 @@
 import { createContext, useState, ReactNode } from "react";
 import { CartoonType } from "../types";
 // Define the type for the context value
-interface UserContextType {
+export interface UserContextType {
   savedAnime: CartoonType[];
   setSavedAnime: React.Dispatch<React.SetStateAction<CartoonType[]>>;
 }
