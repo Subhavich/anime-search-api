@@ -11,11 +11,7 @@ export interface ModalContextType {
   >;
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  AnimeDetailModal: FC<{
-    cartoon: CartoonType;
-    isOpen: boolean;
-    setIsOpen: (isOpen: boolean) => void;
-  }>;
+  AnimeDetailModal: FC<AnimeDetailModalType>;
 }
 
 // Create the context with a default value
@@ -50,11 +46,16 @@ const UserContextProvider: React.FC<ModalContextProviderProps> = ({
   );
 };
 
-const AnimeDetailModal: FC<{
-  cartoon: CartoonType;
+interface AnimeDetailModalType extends CartoonType {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
-}> = ({ cartoon, isOpen, setIsOpen }) => {
+}
+
+const AnimeDetailModal: FC<AnimeDetailModalType> = ({
+  title,
+  isOpen,
+  setIsOpen,
+}) => {
   return (
     <AnimatePresence>
       {isOpen && (
@@ -77,9 +78,7 @@ const AnimeDetailModal: FC<{
               <div className="bg-white w-16 h-16 mb-2 rounded-full text-3xl text-indigo-600 grid place-items-center mx-auto">
                 <FiAlertCircle />
               </div>
-              <h3 className="text-3xl font-bold text-center mb-2">
-                {cartoon.title}
-              </h3>
+              <h3 className="text-3xl font-bold text-center mb-2">{title}</h3>
               <p className="text-center mb-6">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Id
                 aperiam vitae, sapiente ducimus eveniet in velit.

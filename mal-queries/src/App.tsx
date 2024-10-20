@@ -3,6 +3,7 @@ import AppPage from "./pages/App";
 import HomePage from "./pages/Home";
 import RootLayout from "./pages/Root";
 import UserContextProvider from "./store/user-context";
+import ModalContextProvider from "./store/modal-context";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -16,9 +17,11 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <UserContextProvider>
-      <RouterProvider router={router} />;
-    </UserContextProvider>
+    <ModalContextProvider>
+      <UserContextProvider>
+        <RouterProvider router={router} />;
+      </UserContextProvider>
+    </ModalContextProvider>
   );
 }
 

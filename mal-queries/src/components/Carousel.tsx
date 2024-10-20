@@ -10,7 +10,9 @@ import useMeasure from "react-use-measure";
 import { CartoonType } from "../types";
 import { UserContext, UserContextType } from "../store/user-context";
 import { fetchAnimeById } from "../http";
+import { ModalContext, ModalContextType } from "../store/modal-context";
 
+// Carousel Config
 const CARD_WIDTH = 240;
 const CARD_HEIGHT = 360;
 const MARGIN = 24;
@@ -21,6 +23,7 @@ const BREAKPOINTS = {
   lg: 1024,
 };
 
+// Carousel Components
 const CardCarousel: FC<{
   cartoons: CartoonType[];
   runningNumber: number;
@@ -160,6 +163,7 @@ const Card = ({
   onClick,
   selects,
   mal_id,
+  synopsis,
 }: CardProps) => {
   const userData: UserContextType | undefined = useContext(UserContext);
   if (!userData) return;
@@ -173,8 +177,19 @@ const Card = ({
     setSavedAnime((pv: CartoonType[]) => [...pv, data]);
   };
 
+  const modalData: ModalContextType | undefined = useContext(ModalContext);
+  if (!modalData) return;
+  const {
+    setSelectedAnime,
+    selectedAnime,
+    isOpen,
+    setIsOpen,
+    AnimeDetailModal,
+  } = modalData;
+
   return (
     <>
+      {/* Card */}
       <div
         className="relative shrink-0 break-words cursor-pointer rounded-2xl border border-neutral-500 bg-black shadow-md transition-all hover:scale-[1.05] hover:shadow-xl"
         style={{
@@ -196,9 +211,10 @@ const Card = ({
           <p className="text-lg text-slate-300">{score}</p>
         </div>
       </div>
+      {/* Button */}
       {selects && (
         <div className="mt-8 flex justify-end px-6 space-x-4 hover:cursor-pointer">
-          <div className="hover:animate-bounce">
+          <div className="hover:animate-bounce" onClick={() => setIsOpen(true)}>
             <FiMaximize2 />
           </div>
           <div
@@ -207,6 +223,11 @@ const Card = ({
           >
             <FiPlus />
           </div>
+          <AnimeDetailModal
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            title="title"
+          />
         </div>
       )}
     </>
