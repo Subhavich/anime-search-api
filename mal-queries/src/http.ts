@@ -15,7 +15,7 @@ export async function fetchRandomAnime(){
     }
     return resData
 }
-export async function fetchAnimeById(id){
+export async function fetchAnimeById(id:number){
     const response = await fetch(`https://api.jikan.moe/v4/anime/${id}`)
     const resData = await response.json()
     if(!response.ok){
