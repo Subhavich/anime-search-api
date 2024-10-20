@@ -110,7 +110,7 @@ const CardCarousel: FC<{
                   >
                     <Card
                       selects={selectedIndex === ind}
-                      {...cartoon}
+                      cartoon={cartoon}
                       onClick={() => {
                         setSelectedIndex(ind);
                         moveToCard(ind);
@@ -150,23 +150,21 @@ const CardCarousel: FC<{
     </AnimatePresence>
   );
 };
-interface CardProps extends CartoonType {
+interface CardProps {
   onClick: () => void;
   selects: boolean;
+  cartoon:CartoonType
 }
 
 const Card = ({
-  images,
-  title,
-  score,
-  year,
+  
   onClick,
   selects,
-  mal_id,
-  synopsis,
+  cartoon
 }: CardProps) => {
   const userData: UserContextType | undefined = useContext(UserContext);
   if (!userData) return;
+  const {images,title,score,year,mal_id,synopsis} = cartoon
   const { setSavedAnime, savedAnime } = userData;
   const handleFetchAndSave = async (id: number) => {
     const find = savedAnime.find((anime: CartoonType) => anime.mal_id === id);
@@ -226,8 +224,7 @@ const Card = ({
           <AnimeDetailModal
             isOpen={isOpen}
             setIsOpen={setIsOpen}
-            title={title}
-            synopsis={synopsis}
+            {...cartoon}
           />
         </div>
       )}
