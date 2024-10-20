@@ -162,14 +162,15 @@ const Card = ({
   mal_id,
 }: CardProps) => {
   const userData: UserContextType | undefined = useContext(UserContext);
+  if (!userData) return;
   const { setSavedAnime, savedAnime } = userData;
-  const handleFetchAndSave = async (id) => {
-    const find = savedAnime.find((anime) => anime.mal_id === id);
+  const handleFetchAndSave = async (id: number) => {
+    const find = savedAnime.find((anime: CartoonType) => anime.mal_id === id);
     if (find) {
       return;
     }
     const data = await fetchAnimeById(id);
-    setSavedAnime((pv) => [...pv, data]);
+    setSavedAnime((pv: CartoonType[]) => [...pv, data]);
   };
 
   return (
