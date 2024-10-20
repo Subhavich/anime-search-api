@@ -24,6 +24,14 @@ export type CartoonType = {
   score: number;
   year: number;
   genres: GenreType[];
-  synopsis:string
+  synopsis:string;
+  rating:string;
+  aired:aired;
+  status:string;
+  type:string
 };
+
+export type aired = {
+  string:string
+}
 
