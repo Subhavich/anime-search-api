@@ -79,7 +79,7 @@ const TiltCard: FC<{ cartoon: CartoonType }> = ({ cartoon }) => {
         <div className="inset-4 hover:text-white text-5xl opacity-0 hover:opacity-80 hover:cursor-pointer transition-all hover:animate-pulse z-50" onClick={() => setIsOpen(true)}>
             <FiMaximize2 />
           </div>
-          <AnimeDetailModal title="clint" isOpen={isOpen} setIsOpen={setIsOpen}/>
+          <AnimeDetailModal {...cartoon} isOpen={isOpen} setIsOpen={setIsOpen}/>
         <div className="p-4 absolute inset-0 bg-black rounded-xl z-10 opacity-60 flex flex-col"></div>
       </div>
     </motion.div>
