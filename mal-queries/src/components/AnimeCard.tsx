@@ -1,4 +1,4 @@
-import { FC, useRef } from "react";
+import { FC, useRef, useState } from "react";
 import {
   motion,
   useMotionTemplate,
@@ -10,19 +10,20 @@ import { CartoonType } from "../types";
 import { useContext } from "react";
 import { ModalContext } from "../store/modal-context";
 
-// backgroundImage: `url(${images.webp.image_url})`,
-
 const ROTATION_RANGE = 32.5;
 const HALF_ROTATION_RANGE = 32.5 / 2;
 
 const TiltCard: FC<{ cartoon: CartoonType }> = ({ cartoon }) => {
-  const { images, title, score, synopsis } = cartoon;
+  const { images } = cartoon;
 
-  const modalData = useContext(ModalContext)
-  if(!modalData){return}
-  const {setIsOpen,AnimeDetailModal,isOpen} = modalData
+  const modalData = useContext(ModalContext);
+  if (!modalData) {
+    return null;
+  }
+  const { setIsOpen, AnimeDetailModal, isOpen } = modalData;
 
   const ref = useRef<HTMLDivElement>(null);
+  const [isMouseTracking, setIsMouseTracking] = useState(true);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -33,10 +34,9 @@ const TiltCard: FC<{ cartoon: CartoonType }> = ({ cartoon }) => {
   const transform = useMotionTemplate`rotateX(${xSpring}deg) rotateY(${ySpring}deg)`;
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!ref.current) return [0, 0];
+    if (!isMouseTracking || !ref.current) return;
 
     const rect = ref.current.getBoundingClientRect();
-
     const width = rect.width;
     const height = rect.height;
 
@@ -51,8 +51,22 @@ const TiltCard: FC<{ cartoon: CartoonType }> = ({ cartoon }) => {
   };
 
   const handleMouseLeave = () => {
+    if (isMouseTracking) {
+      x.set(0);
+      y.set(0);
+    }
+  };
+
+  const handleClick = () => {
+    setIsOpen(true);
     x.set(0);
     y.set(0);
+    setIsMouseTracking(false); // Disable mouse tracking when the modal is open
+  };
+
+  const handleModalClose = () => {
+    setIsOpen(false);
+    setIsMouseTracking(true); // Re-enable mouse tracking when the modal is closed
   };
 
   return (
@@ -76,10 +90,17 @@ const TiltCard: FC<{ cartoon: CartoonType }> = ({ cartoon }) => {
         }}
         className="absolute inset-3 grid place-content-center rounded-xl bg-white shadow-lg"
       >
-        <div className="inset-4 hover:text-white text-5xl opacity-0 hover:opacity-80 hover:cursor-pointer transition-all hover:animate-pulse z-50" onClick={() => setIsOpen(true)}>
-            <FiMaximize2 />
-          </div>
-          <AnimeDetailModal {...cartoon} isOpen={isOpen} setIsOpen={setIsOpen}/>
+        <div
+          className="inset-4 hover:text-white text-5xl opacity-0 hover:opacity-80 hover:cursor-pointer transition-all hover:animate-pulse z-50"
+          onClick={handleClick}
+        >
+          <FiMaximize2 />
+        </div>
+        <AnimeDetailModal
+          {...cartoon}
+          isOpen={isOpen}
+          setIsOpen={handleModalClose} // Use handleModalClose to reset mouse tracking when the modal closes
+        />
         <div className="p-4 absolute inset-0 bg-black rounded-xl z-10 opacity-60 flex flex-col"></div>
       </div>
     </motion.div>
