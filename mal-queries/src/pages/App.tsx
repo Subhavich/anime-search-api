@@ -61,8 +61,8 @@ const AppPage = () => {
           runningNumber={runningNumber}
         />
 
-        <section>
-          <p className="mb-4 text-2xl mx-auto max-w-6xl font-semibold">
+        <section className=" ">
+          <p className="text-center mb-4 max-w-5xl text-2xl mx-auto font-semibold">
             Displaying Top <span className="text-slate-500">{genre}</span>{" "}
             animes.
           </p>

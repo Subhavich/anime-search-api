@@ -1,8 +1,14 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { FC, useEffect, useState } from "react";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { FC, useContext, useEffect, useState } from "react";
+import {
+  FiChevronLeft,
+  FiChevronRight,
+  FiMaximize2,
+  FiPlus,
+} from "react-icons/fi";
 import useMeasure from "react-use-measure";
 import { CartoonType } from "../types";
+import { UserContext } from "../store/user-context";
 
 const CARD_WIDTH = 240;
 const CARD_HEIGHT = 360;
@@ -145,29 +151,51 @@ interface CardProps extends CartoonType {
   selects: boolean;
 }
 
-const Card = ({ images, title, score, year, onClick, selects }: CardProps) => {
+const Card = ({
+  images,
+  title,
+  score,
+  year,
+  onClick,
+  selects,
+  mal_id,
+}: CardProps) => {
+  const userData = useContext(UserContext);
+
   return (
-    <div
-      className="relative shrink-0 break-words cursor-pointer rounded-2xl border border-neutral-500 bg-black shadow-md transition-all hover:scale-[1.05] hover:shadow-xl"
-      style={{
-        width: CARD_WIDTH,
-        height: CARD_HEIGHT,
-        marginRight: MARGIN,
-        backgroundImage: `url(${images.webp.image_url})`,
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-        transform: selects ? "scale(1.08)" : undefined,
-      }}
-      onClick={onClick}
-    >
-      <div className="absolute flex flex-col inset-0 z-20 rounded-2xl bg-black opacity-80 p-6 text-white transition-[backdrop-filter]">
-        <span className="text-xs font-semibold uppercase text-neutral-300">
-          {year}
-        </span>
-        <p className="my-2 text-2xl font-bold">{title}</p>
-        <p className="text-lg text-slate-300">{score}</p>
+    <>
+      <div
+        className="relative shrink-0 break-words cursor-pointer rounded-2xl border border-neutral-500 bg-black shadow-md transition-all hover:scale-[1.05] hover:shadow-xl"
+        style={{
+          width: CARD_WIDTH,
+          height: CARD_HEIGHT,
+          marginRight: MARGIN,
+          backgroundImage: `url(${images.webp.image_url})`,
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+          transform: selects ? "scale(1.08)" : undefined,
+        }}
+        onClick={onClick}
+      >
+        <div className="absolute flex flex-col inset-0 z-20 rounded-2xl bg-black opacity-80 p-6 text-white transition-[backdrop-filter]">
+          <span className="text-xs font-semibold uppercase text-neutral-300">
+            {year}
+          </span>
+          <p className="my-2 text-2xl font-bold">{title}</p>
+          <p className="text-lg text-slate-300">{score}</p>
+        </div>
       </div>
-    </div>
+      {selects && (
+        <div className="mt-8 flex justify-end px-6 space-x-4 hover:cursor-pointer">
+          <div className="hover:animate-bounce">
+            <FiMaximize2 />
+          </div>
+          <div className="hover:animate-bounce">
+            <FiPlus />
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
