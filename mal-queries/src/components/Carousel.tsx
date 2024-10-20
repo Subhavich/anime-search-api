@@ -8,7 +8,8 @@ import {
 } from "react-icons/fi";
 import useMeasure from "react-use-measure";
 import { CartoonType } from "../types";
-import { UserContext } from "../store/user-context";
+import { UserContext, UserContextType } from "../store/user-context";
+import { fetchAnimeById } from "../http";
 
 const CARD_WIDTH = 240;
 const CARD_HEIGHT = 360;
@@ -160,7 +161,16 @@ const Card = ({
   selects,
   mal_id,
 }: CardProps) => {
-  const userData = useContext(UserContext);
+  const userData: UserContextType | undefined = useContext(UserContext);
+  const { setSavedAnime, savedAnime } = userData;
+  const handleFetchAndSave = async (id) => {
+    const find = savedAnime.find((anime) => anime.mal_id === id);
+    if (find) {
+      return;
+    }
+    const data = await fetchAnimeById(id);
+    setSavedAnime((pv) => [...pv, data]);
+  };
 
   return (
     <>
@@ -190,7 +200,10 @@ const Card = ({
           <div className="hover:animate-bounce">
             <FiMaximize2 />
           </div>
-          <div className="hover:animate-bounce">
+          <div
+            onClick={() => handleFetchAndSave(mal_id)}
+            className="hover:animate-bounce"
+          >
             <FiPlus />
           </div>
         </div>
