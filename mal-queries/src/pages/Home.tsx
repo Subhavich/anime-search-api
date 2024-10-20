@@ -1,7 +1,7 @@
 import AnimeCard from "../components/AnimeCard";
 import { Link } from "react-router-dom";
 // import { UserContext } from "../store/user-context";
-import { FC, useContext, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { fetchRandomAnime } from "../http";
 import { CartoonType } from "../types";
 const HomePage = () => {
@@ -40,15 +40,21 @@ const HomePage = () => {
       <div className="grid grid-cols-12 ">
         <div className="grid col-span-4 h-96">
           {isFetching && (
-            <p className="w-72 my-auto text-center text-2xl font-semibold text-neutral-500 animate-bounce">
+            <p className="w-72 h-94 my-auto text-center text-2xl font-semibold text-neutral-500 animate-bounce">
               Loading ...
             </p>
           )}
           {!isFetching && randomAnime && <AnimeCard cartoon={randomAnime} />}
         </div>
         <div className="flex flex-col col-span-8 justify-between px-2 ">
-          {randomAnime && (
+        {isFetching && <>
+          <p className="w-1/2 rounded-md min-h-6 animate-pulse bg-neutral-800"></p>
+          <p className="w-3/4 rounded-md min-h-6 animate-pulse bg-neutral-800"></p>
+          <p className="w-3/4 rounded-md min-h-40 animate-pulse bg-neutral-800"></p></>}
+          
+          {(randomAnime&&!isFetching) && (
             <div className="flex flex-col justify-start space-y-6">
+              
               <p className="text-2xl font-sans font-semibold">
                 {randomAnime.title}
               </p>
