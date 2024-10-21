@@ -92,11 +92,15 @@ const HomePage = () => {
               <button className="px-2 py-1 hover:bg-white transition-colors max-w-48 border border-neutral-500 text-lg rounded-lg text-neutral-500">
                 <Link to={"/app"}>Browse Top Animes</Link>
               </button>
+              <button className="px-2 py-1 hover:bg-white transition-colors max-w-48 border border-neutral-500 text-lg rounded-lg text-neutral-500">
+                <a href="#search">Advanced Search</a>
+              </button>
             </div>
           </div>
         </div>
         <hr
-          className="opacity-80 mt-48
+          id="search"
+          className="opacity-80 my-48
         "
         />
         {/* Search Bar */}
