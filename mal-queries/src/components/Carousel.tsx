@@ -205,14 +205,17 @@ const Card = ({ onClick, selects, cartoon }: CardProps) => {
       {/* Button */}
       {selects && (
         <div className="mt-8 flex justify-end px-6 space-x-4 hover:cursor-pointer">
-          <div className="hover:animate-bounce" onClick={() => setIsOpen(true)}>
-            <FiMaximize2 />
+          <div
+            className="  hover:animate-bounce"
+            onClick={() => setIsOpen(true)}
+          >
+            <FiMaximize2 className="size-10" />
           </div>
           <div
             onClick={() => handleFetchAndSave(mal_id)}
             className="hover:animate-bounce"
           >
-            <FiPlus />
+            <FiPlus className="size-10" />
           </div>
           <AnimeDetailModal
             isOpen={isOpen}
