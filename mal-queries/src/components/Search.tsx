@@ -75,53 +75,89 @@ const SearchBar = () => {
   }, [formData]);
 
   return (
-    <div className="text- my-8">
-      <label htmlFor="status">Select Anime Status:</label>
-      <select name="status" id="status" ref={statusRef}>
-        <option value="airing">Airing</option>
-        <option value="complete">Complete</option>
-        <option value="upcoming">Upcoming</option>
-      </select>
+    <div className="text-md my-8 ">
+      <div className="max-w-5xl mx-auto grid grid-cols-12 mb-12">
+        <div className="col-span-4">
+          <div className="flex flex-col">
+            <label htmlFor="status">Select Anime Status</label>
+            <select
+              name="status"
+              id="status"
+              ref={statusRef}
+              className=" p-1 my-1 bg-transparent border border-neutral-500 rounded-md"
+            >
+              <option value="">Any</option>
+              <option value="airing">Airing</option>
+              <option value="complete">Complete</option>
+              <option value="upcoming">Upcoming</option>
+            </select>
+          </div>
 
-      <label htmlFor="type">Select Type of Anime:</label>
-      <select name="type" id="type" ref={typeRef}>
-        <option value="tv">TV</option>
-        <option value="movie">Movie</option>
-        <option value="ova">OVA</option>
-        <option value="special">Special</option>
-        <option value="ona">ONA</option>
-        <option value="music">Music</option>
-        <option value="cm">CM</option>
-        <option value="pv">PV</option>
-        <option value="tv_special">TV Special</option>
-      </select>
+          <div className="flex flex-col">
+            <label htmlFor="type">Select Type of Anime:</label>
+            <select
+              name="type"
+              id="type"
+              ref={typeRef}
+              className=" p-1 my-1 bg-transparent border border-neutral-500 rounded-md"
+            >
+              <option value="tv">TV</option>
+              <option value="movie">Movie</option>
+              <option value="ova">OVA</option>
+              <option value="special">Special</option>
+              <option value="ona">ONA</option>
+              <option value="music">Music</option>
+              <option value="cm">CM</option>
+              <option value="pv">PV</option>
+              <option value="tv_special">TV Special</option>
+            </select>
+          </div>
 
-      <label htmlFor="start-date">Start Date:</label>
-      <input
-        type="date"
-        id="start-date"
-        ref={startRef}
-        defaultValue="1989-11-11"
-      />
+          <div className="flex flex-col">
+            <label htmlFor="start-date">Start Date:</label>
+            <input
+              type="date"
+              id="start-date"
+              ref={startRef}
+              defaultValue="1989-11-11"
+              className=" p-1 my-1 bg-transparent border border-neutral-500 rounded-md"
+            />
+          </div>
 
-      <label htmlFor="end-date">End Date:</label>
-      <input type="date" id="end-date" ref={endRef} defaultValue="2020-11-11" />
+          <div className="flex flex-col">
+            <label htmlFor="end-date">End Date:</label>
+            <input
+              type="date"
+              id="end-date"
+              ref={endRef}
+              defaultValue="2020-11-11"
+              className=" p-1 my-1 bg-transparent border border-neutral-500 rounded-md"
+            />
+          </div>
 
-      <label htmlFor="search">Search Keyword:</label>
-      <input id="search" ref={stringRef} placeholder="Enter a keyword..." />
-      <button onClick={handleUpdateQuery}>Update Query</button>
+          <div className="flex flex-col"></div>
+        </div>
 
-      {/* <p>DISP FORM DATA: {generateQueryString(formData)}</p>
-      <div>
-        start ref: {startRef.current ? startRef.current.value : "undefined"}
+        <div className="col-span-8 pl-16 flex flex-col justify-between items-center">
+          <label htmlFor="search" className="w-full text-center text-2xl">
+            Insert related keywords
+          </label>
+          <input
+            id="search"
+            ref={stringRef}
+            className="bg-transparent text-center px-4 m-1 text-xl border border-neutral-500 rounded-md min-h-12"
+            placeholder="..."
+          />
+
+          <button
+            onClick={handleUpdateQuery}
+            className="px-2 py-1 font-mono rounded-lg transition-colors font-light text-lg bg-green-700 hover:bg-green-400 text-white hover:text-slate-700 border border-neutral-500 "
+          >
+            Search Anime !
+          </button>
+        </div>
       </div>
-      <div>end ref: {endRef.current ? endRef.current.value : "undefined"}</div>
-      <div>
-        status ref: {statusRef.current ? statusRef.current.value : "undefined"}
-      </div>
-      <div>
-        string ref: {stringRef.current ? stringRef.current.value : "undefined"}
-      </div> */}
+
       {!isfetching && animeList.length > 0 && (
         <CardCarousel
           runningNumber={1}

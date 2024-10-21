@@ -50,7 +50,7 @@ const HomePage = () => {
   return (
     <>
       <main className="max-w-5xl mx-auto ">
-        <p className="text-center text-3xl my-8">Generate Random Anime!</p>
+        <p className="text-center text-3xl my-16">Generate Random Anime!</p>
         {/* Main Card */}
         <div className="grid grid-cols-12 mb-8 ">
           <div className="grid col-span-4 h-96">
@@ -95,10 +95,16 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-        <hr className="opacity-80" />
+        <hr
+          className="opacity-80 mt-48
+        "
+        />
         {/* Search Bar */}
       </main>
-      <SearchBar />
+      <section className="pb-32">
+        <p className="text-center text-3xl my-16">Advanced Search</p>
+        <SearchBar />
+      </section>
     </>
   );
 };
