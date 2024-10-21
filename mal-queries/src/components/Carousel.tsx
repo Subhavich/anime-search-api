@@ -153,18 +153,13 @@ const CardCarousel: FC<{
 interface CardProps {
   onClick: () => void;
   selects: boolean;
-  cartoon:CartoonType
+  cartoon: CartoonType;
 }
 
-const Card = ({
-  
-  onClick,
-  selects,
-  cartoon
-}: CardProps) => {
+const Card = ({ onClick, selects, cartoon }: CardProps) => {
   const userData: UserContextType | undefined = useContext(UserContext);
   if (!userData) return;
-  const {images,title,score,year,mal_id,synopsis} = cartoon
+  const { images, title, score, year, mal_id } = cartoon;
   const { setSavedAnime, savedAnime } = userData;
   const handleFetchAndSave = async (id: number) => {
     const find = savedAnime.find((anime: CartoonType) => anime.mal_id === id);
@@ -177,13 +172,7 @@ const Card = ({
 
   const modalData: ModalContextType | undefined = useContext(ModalContext);
   if (!modalData) return;
-  const {
-    setSelectedAnime,
-    selectedAnime,
-    isOpen,
-    setIsOpen,
-    AnimeDetailModal,
-  } = modalData;
+  const { isOpen, setIsOpen, AnimeDetailModal } = modalData;
 
   return (
     <>

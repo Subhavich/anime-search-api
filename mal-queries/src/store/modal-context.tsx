@@ -2,8 +2,7 @@ import { createContext, useState, ReactNode, FC } from "react";
 import { createPortal } from "react-dom";
 import { CartoonType } from "../types";
 import { AnimatePresence, motion } from "framer-motion";
-import { FiAlertCircle, FiPlus } from "react-icons/fi";
-import { image } from "framer-motion/client";
+import { FiPlus } from "react-icons/fi";
 
 interface PortalProps {
   children: ReactNode;
@@ -70,7 +69,7 @@ const AnimeDetailModal: FC<AnimeDetailModalType> = ({
   synopsis,
   trailer,
   images,
-  mal_id,
+
   genres,
   score,
   scored_by,

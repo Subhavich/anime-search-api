@@ -9,6 +9,7 @@ export interface Genre {
 export type ImageType = {
   webp: {
     image_url: string;
+    large_image_url:string
   };
 };
 
@@ -28,8 +29,14 @@ export type CartoonType = {
   rating:string;
   aired:aired;
   status:string;
-  type:string
+  type:string;
+  scored_by:number;
+  trailer:TrailerType;
 };
+
+export type TrailerType = {
+  embed_url:string
+}
 
 export type aired = {
   string:string
