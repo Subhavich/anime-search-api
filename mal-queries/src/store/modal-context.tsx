@@ -2,7 +2,8 @@ import { createContext, useState, ReactNode, FC } from "react";
 import { createPortal } from "react-dom";
 import { CartoonType } from "../types";
 import { AnimatePresence, motion } from "framer-motion";
-import { FiAlertCircle } from "react-icons/fi";
+import { FiAlertCircle, FiPlus } from "react-icons/fi";
+import { image } from "framer-motion/client";
 
 interface PortalProps {
   children: ReactNode;
@@ -61,14 +62,20 @@ interface AnimeDetailModalType extends CartoonType {
   setIsOpen: (isOpen: boolean) => void;
 }
 
+// Modal Component
 const AnimeDetailModal: FC<AnimeDetailModalType> = ({
   title,
   isOpen,
   setIsOpen,
   synopsis,
-  trailer
+  trailer,
+  images,
+  mal_id,
+  genres,
+  score,
+  scored_by,
+  aired,
 }) => {
-  console.log(trailer)
   return (
     <AnimatePresence>
       <Portal>
@@ -85,26 +92,93 @@ const AnimeDetailModal: FC<AnimeDetailModalType> = ({
               animate={{ scale: 1, rotate: "0deg" }}
               exit={{ scale: 0, rotate: "0deg" }}
               onClick={(e) => e.stopPropagation()}
-              className="  bg-gradient-to-br border border-neutral-500 p-6 rounded-lg w-full max-w-5xl  shadow-xl cursor-default relative overflow-hidden"
+              className="  bg-neutral-900 border border-neutral-500 p-6 rounded-lg w-full max-w-4xl  shadow-xl cursor-default relative overflow-hidden"
             >
-              <div className="relative z-10">
-                <iframe className="w-full aspect-video" src="https://www.youtube.com/embed/oh9y94vvOEQ?si=77F99bHxF7IfDlHr"/>
-                <h3 className="text-3xl font-bold text-center mb-2">{title}</h3>
-                <p className="text-center mb-6">
-                  {synopsis}
-                </p>
-                <div className="flex gap-2">
+              <div className="relative z-10 p-4">
+                <div className="grid grid-cols-12 min-h-36 gap-4 ">
+                  {/* left */}
+                  <div className=" col-span-6 overflow-hidden pr-4">
+                    <div className="relative">
+                      <div className="absolute z-10 bg-gradient-to-t from-neutral-900 to-transparent inset-0"></div>
+
+                      <img
+                        className="relative object-cover object-left size-96 z-0"
+                        src={images.webp.large_image_url}
+                      />
+                    </div>
+                    <div className="relative pl-8 line-clamp-2 text-4xl font-mono -mt-12 text-white z-50">
+                      {title}
+                    </div>
+                    <div className="relative pl-8 line-clamp-4 mb-12">
+                      {synopsis}
+                    </div>
+                  </div>
+                  {/* right */}
+                  <div className=" col-span-6 space-y-4 font-mono">
+                    <p
+                      className="
+                    text-2xl font-bold"
+                    >
+                      TAGS
+                    </p>
+                    <div className="flex gap-4 flex-wrap ">
+                      {genres.map((genre) => (
+                        <span className="text-lg">
+                          {genre.name.toUpperCase()}
+                        </span>
+                      ))}
+                    </div>
+                    <p
+                      className="
+                    text-2xl font-bold"
+                    >
+                      SCORE
+                    </p>
+                    <div className="flex gap-2">
+                      <span>{score}</span>
+                      <span>scored by {scored_by} users</span>
+                    </div>
+
+                    <p
+                      className="
+                    text-2xl font-bold"
+                    >
+                      DATE
+                    </p>
+
+                    <p>{aired.string}</p>
+                    <p
+                      className="
+                    text-2xl font-bold"
+                    >
+                      TRAILER
+                    </p>
+                    <div>
+                      {trailer.embed_url ? (
+                        <iframe
+                          src={trailer.embed_url}
+                          className="rounded-lg w-full"
+                        />
+                      ) : (
+                        "Trailer Data Not Found"
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Button Group */}
+                <div className="m-4 flex gap-2">
                   <button
                     onClick={() => setIsOpen(false)}
                     className="bg-transparent hover:bg-white/10 transition-colors text-white font-semibold w-full py-2 rounded"
                   >
-                    Nah, go back
+                    Go back
                   </button>
                   <button
                     onClick={() => setIsOpen(false)}
-                    className="bg-white hover:opacity-90 transition-opacity text-indigo-600 font-semibold w-full py-2 rounded"
+                    className="flex items-center gap-1 font-mono justify-center bg-white hover:opacity-90 transition-opacity text-black font-semibold w-full py-2 rounded"
                   >
-                    Add to Watch List
+                    Add <FiPlus className="inline center" />
                   </button>
                 </div>
               </div>
@@ -117,3 +191,8 @@ const AnimeDetailModal: FC<AnimeDetailModalType> = ({
 };
 
 export default UserContextProvider;
+
+/* <iframe
+                  className="w-28 aspect-video"
+                  src="https://www.youtube.com/embed/oh9y94vvOEQ?si=77F99bHxF7IfDlHr"
+                /> */
