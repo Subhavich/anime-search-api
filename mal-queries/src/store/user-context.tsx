@@ -27,6 +27,10 @@ const UserContextProvider: React.FC<UserContextProviderProps> = ({
     return savedData ? JSON.parse(savedData) : [];
   });
 
+  const clearAllData = () => {
+    setSavedAnime([]);
+  };
+
   useEffect(() => {
     // Save data to localStorage whenever savedAnime changes
     localStorage.setItem("savedAnime", JSON.stringify(savedAnime));
@@ -35,6 +39,7 @@ const UserContextProvider: React.FC<UserContextProviderProps> = ({
   const userValue = {
     savedAnime,
     setSavedAnime,
+    clearAllData,
   };
 
   return (

@@ -2,145 +2,145 @@ import { useState, useContext } from "react";
 import { FaSadTear, FaTrash } from "react-icons/fa";
 import { UserContext } from "../store/user-context";
 
-const DEFAULT_CARDS = [
-  {
-    id: 1,
-    title: "Naruto",
-    description: "A story about a young ninja with big dreams.",
-    column: "toWatch",
-  },
-  {
-    id: 2,
-    title: "Attack on Titan",
-    description: "Survival against titans and the fight for freedom.",
-    column: "watchedLove",
-  },
-  {
-    id: 3,
-    title: "One Piece",
-    description: "A pirate's adventure to find the greatest treasure.",
-    column: "toWatch",
-  },
-  {
-    id: 4,
-    title: "Death Note",
-    description: "A notebook with the power to kill.",
-    column: "watchedHate",
-  },
-  {
-    id: 5,
-    title: "Demon Slayer",
-    description:
-      "A young boy fights demons to avenge his family and save his sister.",
-    column: "toWatch",
-  },
-  {
-    id: 6,
-    title: "My Hero Academia",
-    description:
-      "In a world of heroes and villains, one boy strives to be the best hero.",
-    column: "watchedLove",
-  },
-  {
-    id: 7,
-    title: "Fullmetal Alchemist",
-    description:
-      "Two brothers search for a way to restore their bodies using alchemy.",
-    column: "toWatch",
-  },
-  {
-    id: 8,
-    title: "Tokyo Ghoul",
-    description:
-      "A young man becomes a half-ghoul and must navigate his new life.",
-    column: "watchedHate",
-  },
-  {
-    id: 9,
-    title: "Hunter x Hunter",
-    description:
-      "A boy becomes a hunter to find his missing father and explore the world.",
-    column: "toWatch",
-  },
-  {
-    id: 10,
-    title: "Dragon Ball Z",
-    description:
-      "Fighters protect Earth from powerful enemies in epic battles.",
-    column: "watchedLove",
-  },
-  {
-    id: 11,
-    title: "Bleach",
-    description:
-      "A teenager gains the powers of a Soul Reaper and battles evil spirits.",
-    column: "toWatch",
-  },
-  {
-    id: 12,
-    title: "Fairy Tail",
-    description: "Wizards from a magical guild embark on adventures together.",
-    column: "watchedLove",
-  },
-  {
-    id: 13,
-    title: "Sword Art Online",
-    description:
-      "Players trapped in a virtual reality game must fight for survival.",
-    column: "watchedHate",
-  },
-  {
-    id: 14,
-    title: "Cowboy Bebop",
-    description:
-      "A space-faring bounty hunter crew pursues criminals across the galaxy.",
-    column: "toWatch",
-  },
-  {
-    id: 15,
-    title: "Code Geass",
-    description:
-      "A young man gains a mysterious power and sets out to overthrow an empire.",
-    column: "watchedLove",
-  },
-  {
-    id: 16,
-    title: "Neon Genesis Evangelion",
-    description:
-      "Teenagers pilot giant mechs to defend Earth from monstrous beings.",
-    column: "watchedHate",
-  },
-  {
-    id: 17,
-    title: "Black Clover",
-    description: "A boy without magic strives to become the Wizard King.",
-    column: "toWatch",
-  },
-  {
-    id: 18,
-    title: "Mob Psycho 100",
-    description:
-      "A young psychic battles spirits and other supernatural threats.",
-    column: "watchedLove",
-  },
-  {
-    id: 19,
-    title: "Steins;Gate",
-    description:
-      "A group of friends discovers time travel with serious consequences.",
-    column: "watchedHate",
-  },
-  {
-    id: 20,
-    title: "JoJo's Bizarre Adventure",
-    description: "Generations of warriors fight using powerful Stands.",
-    column: "toWatch",
-  },
-];
+// const DEFAULT_CARDS = [
+//   {
+//     id: 1,
+//     title: "Naruto",
+//     description: "A story about a young ninja with big dreams.",
+//     column: "toWatch",
+//   },
+//   {
+//     id: 2,
+//     title: "Attack on Titan",
+//     description: "Survival against titans and the fight for freedom.",
+//     column: "watchedLove",
+//   },
+//   {
+//     id: 3,
+//     title: "One Piece",
+//     description: "A pirate's adventure to find the greatest treasure.",
+//     column: "toWatch",
+//   },
+//   {
+//     id: 4,
+//     title: "Death Note",
+//     description: "A notebook with the power to kill.",
+//     column: "watchedHate",
+//   },
+//   {
+//     id: 5,
+//     title: "Demon Slayer",
+//     description:
+//       "A young boy fights demons to avenge his family and save his sister.",
+//     column: "toWatch",
+//   },
+//   {
+//     id: 6,
+//     title: "My Hero Academia",
+//     description:
+//       "In a world of heroes and villains, one boy strives to be the best hero.",
+//     column: "watchedLove",
+//   },
+//   {
+//     id: 7,
+//     title: "Fullmetal Alchemist",
+//     description:
+//       "Two brothers search for a way to restore their bodies using alchemy.",
+//     column: "toWatch",
+//   },
+//   {
+//     id: 8,
+//     title: "Tokyo Ghoul",
+//     description:
+//       "A young man becomes a half-ghoul and must navigate his new life.",
+//     column: "watchedHate",
+//   },
+//   {
+//     id: 9,
+//     title: "Hunter x Hunter",
+//     description:
+//       "A boy becomes a hunter to find his missing father and explore the world.",
+//     column: "toWatch",
+//   },
+//   {
+//     id: 10,
+//     title: "Dragon Ball Z",
+//     description:
+//       "Fighters protect Earth from powerful enemies in epic battles.",
+//     column: "watchedLove",
+//   },
+//   {
+//     id: 11,
+//     title: "Bleach",
+//     description:
+//       "A teenager gains the powers of a Soul Reaper and battles evil spirits.",
+//     column: "toWatch",
+//   },
+//   {
+//     id: 12,
+//     title: "Fairy Tail",
+//     description: "Wizards from a magical guild embark on adventures together.",
+//     column: "watchedLove",
+//   },
+//   {
+//     id: 13,
+//     title: "Sword Art Online",
+//     description:
+//       "Players trapped in a virtual reality game must fight for survival.",
+//     column: "watchedHate",
+//   },
+//   {
+//     id: 14,
+//     title: "Cowboy Bebop",
+//     description:
+//       "A space-faring bounty hunter crew pursues criminals across the galaxy.",
+//     column: "toWatch",
+//   },
+//   {
+//     id: 15,
+//     title: "Code Geass",
+//     description:
+//       "A young man gains a mysterious power and sets out to overthrow an empire.",
+//     column: "watchedLove",
+//   },
+//   {
+//     id: 16,
+//     title: "Neon Genesis Evangelion",
+//     description:
+//       "Teenagers pilot giant mechs to defend Earth from monstrous beings.",
+//     column: "watchedHate",
+//   },
+//   {
+//     id: 17,
+//     title: "Black Clover",
+//     description: "A boy without magic strives to become the Wizard King.",
+//     column: "toWatch",
+//   },
+//   {
+//     id: 18,
+//     title: "Mob Psycho 100",
+//     description:
+//       "A young psychic battles spirits and other supernatural threats.",
+//     column: "watchedLove",
+//   },
+//   {
+//     id: 19,
+//     title: "Steins;Gate",
+//     description:
+//       "A group of friends discovers time travel with serious consequences.",
+//     column: "watchedHate",
+//   },
+//   {
+//     id: 20,
+//     title: "JoJo's Bizarre Adventure",
+//     description: "Generations of warriors fight using powerful Stands.",
+//     column: "toWatch",
+//   },
+// ];
 
 const MyBoard = () => {
   return (
-    <div className="h-screen w-full bg-neutral-900 text-neutral-50">
+    <div className="h-screen w-full mx-auto text-neutral-50">
       <Board />
     </div>
   );
@@ -148,33 +148,46 @@ const MyBoard = () => {
 
 const Board = () => {
   const userData = useContext(UserContext);
-  const { savedAnime, setSavedAnime } = userData;
-  const [cards, setCards] = useState([...DEFAULT_CARDS]);
+  const { savedAnime, setSavedAnime, clearAllData } = userData;
+
   return (
-    <div className="flex h-full w-full gap-3 overflow-scroll p-12">
-      <Column
-        title="To Watch"
-        headingColor="text-white"
-        column="toWatch"
-        cards={cards}
-        setCards={setCards}
-      />
-      <Column
-        title="Watched - Hate"
-        headingColor="text-red-500"
-        column="watchedHate"
-        cards={cards}
-        setCards={setCards}
-      />
-      <Column
-        title="Watched - Love"
-        headingColor="text-green-400"
-        column="watchedLove"
-        cards={cards}
-        setCards={setCards}
-      />
-      <BurnBarrel setCards={setCards} />
-    </div>
+    <>
+      <div className="mx-auto max-w-5xl">
+        <button
+          className="px-2 py-1 border border-rose-300"
+          onClick={clearAllData}
+        >
+          KILL SWITCH
+        </button>
+        {savedAnime.map((anime) => (
+          <p>{anime.title}</p>
+        ))}
+      </div>
+      <div className="flex h-full w-full gap-3  p-12 max-w-5xl mx-auto">
+        <Column
+          title="To Watch"
+          headingColor="text-white"
+          column="toWatch"
+          cards={savedAnime}
+          setCards={setSavedAnime}
+        />
+        <Column
+          title="Watched - Hate"
+          headingColor="text-red-500"
+          column="watchedHate"
+          cards={savedAnime}
+          setCards={setSavedAnime}
+        />
+        <Column
+          title="Watched - Love"
+          headingColor="text-green-400"
+          column="watchedLove"
+          cards={savedAnime}
+          setCards={setSavedAnime}
+        />
+        <BurnBarrel setCards={setSavedAnime} />
+      </div>
+    </>
   );
 };
 
@@ -312,7 +325,15 @@ const Column = ({ title, headingColor, column, cards, setCards }) => {
   );
 };
 
-const Card = ({ title, id, column, description, handleDragStart }) => {
+const Card = ({
+  title,
+  id,
+  column,
+  description,
+  handleDragStart,
+  synopsis,
+  images,
+}) => {
   return (
     <>
       <DropIndicator beforeId={id} column={column} />
@@ -321,10 +342,17 @@ const Card = ({ title, id, column, description, handleDragStart }) => {
         onDragStart={(e) =>
           handleDragStart(e, { title, id, column, description })
         }
-        className="cursor-grab rounded border border-neutral-700 bg-neutral-800 p-3 active:cursor-grabbing"
+        className="brightness-50 hover:brightness-75 transition-all h-24 max-h-40 relative cursor-grab rounded border active:cursor-grabbing overflow-hidden"
       >
-        <p className="text-sm text-neutral-100">{title}</p>
-        <p className="text-xs text-neutral-400">{description}</p>
+        <img
+          src={images.webp.image_url}
+          className="absolute inset-0 object-cover object-center w-full h-full"
+        />
+
+        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+        <p className="relative z-40 m-4 text-white font-semibold text-lg line-clamp-1">
+          {title}
+        </p>
       </div>
     </>
   );

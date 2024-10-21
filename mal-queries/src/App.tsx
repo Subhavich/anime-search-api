@@ -21,7 +21,7 @@ function App() {
   return (
     <ModalContextProvider>
       <UserContextProvider>
-        <RouterProvider router={router} />;
+        <RouterProvider router={router} />
       </UserContextProvider>
     </ModalContextProvider>
   );

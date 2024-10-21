@@ -89,6 +89,7 @@ const CardCarousel: FC<{
             transition={{ duration: 0.5, ease: "easeOut" }}
           >
             {/* CARDS */}
+
             <div className="mx-auto max-w-6xl">
               <motion.div
                 animate={{
@@ -167,7 +168,10 @@ const Card = ({ onClick, selects, cartoon }: CardProps) => {
       return;
     }
     const data = await fetchAnimeById(id);
-    setSavedAnime((pv: CartoonType[]) => [...pv, data]);
+    setSavedAnime((pv: CartoonType[]) => [
+      ...pv,
+      { ...data, column: "toWatch", id: data.mal_id },
+    ]);
   };
 
   const modalData: ModalContextType | undefined = useContext(ModalContext);
