@@ -4,6 +4,7 @@ import HomePage from "./pages/Home";
 import RootLayout from "./pages/Root";
 import UserContextProvider from "./store/user-context";
 import ModalContextProvider from "./store/modal-context";
+import MyListPage from "./pages/MyList";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -11,6 +12,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <HomePage /> },
       { path: "/app", element: <AppPage /> },
+      { path: "/mylist", element: <MyListPage /> },
     ],
   },
 ]);

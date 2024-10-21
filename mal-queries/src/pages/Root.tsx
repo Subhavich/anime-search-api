@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, Route } from "react-router-dom";
 import { FC } from "react";
 import { motion } from "framer-motion";
 import { useContext } from "react";
@@ -25,7 +25,7 @@ const Navbar = () => {
       <div className="py-2 px-2 flex items-center overflow-hidden grow justify-end space-x-8">
         <Navigation route="">Home</Navigation>
         <Navigation route="app">App</Navigation>
-        <JoinButton />
+        <MyListButton route="mylist" />
       </div>
     </nav>
   );
@@ -53,7 +53,7 @@ const Navigation: FC<NavigationProps> = ({ children, route = "" }) => {
   );
 };
 
-const JoinButton = () => {
+const MyListButton: FC<{ route: string }> = ({ route }) => {
   const userData: UserContextType | undefined = useContext(UserContext);
   let quantity;
   if (!userData || userData.savedAnime.length === 0) {
@@ -80,7 +80,9 @@ const JoinButton = () => {
           active:scale-100
           `}
     >
-      My List <p>{quantity}</p>
+      <NavLink to={`/${route}`}>
+        My List <p>{quantity}</p>
+      </NavLink>
     </button>
   );
 };
