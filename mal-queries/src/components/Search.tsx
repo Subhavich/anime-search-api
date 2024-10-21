@@ -2,7 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import { fetchAnimeParams } from "../http";
 import CardCarousel from "./Carousel";
 
-const generateQueryString = (params) => {
+const generateQueryString = (params: {
+  start_date: string;
+  end_date: string;
+  status: string;
+  q: string;
+  type: string;
+}) => {
   const queryString = Object.entries(params)
     .filter(([key, value]) => value)
     .map(
@@ -29,7 +35,7 @@ const SearchBar = () => {
   const endRef = useRef<HTMLInputElement>(null); // Ref for an input element
   const statusRef = useRef<HTMLSelectElement>(null); // Ref for a select element
   const stringRef = useRef<HTMLInputElement>(null); // Ref for another input element
-  const typeRef = useRef<HTMLInputElement>(null);
+  const typeRef = useRef<HTMLSelectElement>(null);
 
   // Event handler to log or update query
   const handleUpdateQuery = () => {
@@ -117,7 +123,11 @@ const SearchBar = () => {
         string ref: {stringRef.current ? stringRef.current.value : "undefined"}
       </div> */}
       {!isfetching && animeList.length > 0 && (
-        <CardCarousel cartoons={animeList} isFetching={isfetching} />
+        <CardCarousel
+          runningNumber={1}
+          cartoons={animeList}
+          isFetching={isfetching}
+        />
       )}
     </div>
   );
