@@ -1,5 +1,6 @@
-import { createContext, useState, ReactNode } from "react";
+import { createContext, useState, useEffect, ReactNode } from "react";
 import { CartoonType } from "../types";
+
 // Define the type for the context value
 export interface UserContextType {
   savedAnime: CartoonType[];
@@ -20,11 +21,20 @@ interface UserContextProviderProps {
 const UserContextProvider: React.FC<UserContextProviderProps> = ({
   children,
 }) => {
-  const [savedAnime, setSavedAnime] = useState<CartoonType[]>([]);
+  const [savedAnime, setSavedAnime] = useState<CartoonType[]>(() => {
+    // Load saved data from localStorage on initial render
+    const savedData = localStorage.getItem("savedAnime");
+    return savedData ? JSON.parse(savedData) : [];
+  });
+
+  useEffect(() => {
+    // Save data to localStorage whenever savedAnime changes
+    localStorage.setItem("savedAnime", JSON.stringify(savedAnime));
+  }, [savedAnime]);
+
   const userValue = {
     savedAnime,
     setSavedAnime,
-    name: "KIMI",
   };
 
   return (
