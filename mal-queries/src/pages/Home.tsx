@@ -1,13 +1,14 @@
 import AnimeCard from "../components/AnimeCard";
 import { Link } from "react-router-dom";
-// import { UserContext } from "../store/user-context";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState, useRef } from "react";
 import { fetchRandomAnime } from "../http";
 import { CartoonType } from "../types";
+
 const HomePage = () => {
   const [randomAnime, setRandomAnime] = useState<CartoonType | null>();
   const [isFetching, setIsFetching] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const hasFetched = useRef(false); // Ref to track if fetching has occurred
 
   const fetchRandom = async () => {
     setIsFetching(true);
@@ -15,7 +16,13 @@ const HomePage = () => {
 
     let anime: CartoonType | null = null;
 
-    while (!anime || !anime.synopsis || anime.rating == "Rx - Hentai") {
+    while (
+      !anime ||
+      !anime.synopsis ||
+      anime.rating === "Rx - Hentai" ||
+      !anime.score ||
+      !anime.trailer.embed_url
+    ) {
       try {
         const resData = await fetchRandomAnime();
         anime = resData.data;
@@ -32,7 +39,10 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    fetchRandom();
+    if (!hasFetched.current) {
+      fetchRandom();
+      hasFetched.current = true; // Set the ref to true after the first fetch
+    }
   }, []);
 
   return (
@@ -47,14 +57,16 @@ const HomePage = () => {
           {!isFetching && randomAnime && <AnimeCard cartoon={randomAnime} />}
         </div>
         <div className="flex flex-col col-span-8 justify-between px-2 ">
-        {isFetching && <>
-          <p className="w-1/2 rounded-md min-h-6 animate-pulse bg-neutral-800"></p>
-          <p className="w-3/4 rounded-md min-h-6 animate-pulse bg-neutral-800"></p>
-          <p className="w-3/4 rounded-md min-h-40 animate-pulse bg-neutral-800"></p></>}
-          
-          {(randomAnime&&!isFetching) && (
+          {isFetching && (
+            <>
+              <p className="w-1/2 rounded-md min-h-6 animate-pulse bg-neutral-800"></p>
+              <p className="w-3/4 rounded-md min-h-6 animate-pulse bg-neutral-800"></p>
+              <p className="w-3/4 rounded-md min-h-40 animate-pulse bg-neutral-800"></p>
+            </>
+          )}
+
+          {randomAnime && !isFetching && (
             <div className="flex flex-col justify-start space-y-6">
-              
               <p className="text-2xl font-sans font-semibold">
                 {randomAnime.title}
               </p>
@@ -65,15 +77,12 @@ const HomePage = () => {
           {/* Button Group */}
           <div className="flex space-x-4">
             <button
-              className=" px-2 py-1 hover:bg-white transition-colors  max-w-48 border border-neutral-500 text-lg rounded-lg text-neutral-500"
+              className="px-2 py-1 hover:bg-white transition-colors max-w-48 border border-neutral-500 text-lg rounded-lg text-neutral-500"
               onClick={fetchRandom}
             >
               Get Random Anime
             </button>
-            <button
-              className=" px-2 py-1 hover:bg-white transition-colors  max-w-48 border border-neutral-500 text-lg rounded-lg text-neutral-500"
-              onClick={fetchRandom}
-            >
+            <button className="px-2 py-1 hover:bg-white transition-colors max-w-48 border border-neutral-500 text-lg rounded-lg text-neutral-500">
               <Link to={"/app"}>Browse Top Animes</Link>
             </button>
           </div>

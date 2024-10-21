@@ -157,7 +157,7 @@ const AnimeDetailModal: FC<AnimeDetailModalType> = ({
                       {trailer.embed_url ? (
                         <iframe
                           src={trailer.embed_url}
-                          className="rounded-lg w-full"
+                          className="rounded-2xl w-full aspect-video"
                         />
                       ) : (
                         "Trailer Data Not Found"
