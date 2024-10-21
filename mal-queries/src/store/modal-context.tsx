@@ -3,6 +3,8 @@ import { createPortal } from "react-dom";
 import { CartoonType } from "../types";
 import { AnimatePresence, motion } from "framer-motion";
 import { FiPlus } from "react-icons/fi";
+import { useContext } from "react";
+import { UserContext } from "./user-context";
 
 interface PortalProps {
   children: ReactNode;
@@ -59,6 +61,7 @@ const UserContextProvider: React.FC<ModalContextProviderProps> = ({
 interface AnimeDetailModalType extends CartoonType {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
+  cartoon: CartoonType;
 }
 
 // Modal Component
@@ -69,12 +72,18 @@ const AnimeDetailModal: FC<AnimeDetailModalType> = ({
   synopsis,
   trailer,
   images,
-
   genres,
   score,
   scored_by,
   aired,
+  cartoon,
 }) => {
+  const userData = useContext(UserContext);
+  if (!userData) {
+    return;
+  }
+  const { setSavedAnime } = userData;
+
   return (
     <AnimatePresence>
       <Portal>
@@ -174,7 +183,13 @@ const AnimeDetailModal: FC<AnimeDetailModalType> = ({
                     Go back
                   </button>
                   <button
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => {
+                      setSavedAnime((pv) => [
+                        ...pv,
+                        { ...cartoon, column: "toWatch", id: cartoon.mal_id },
+                      ]);
+                      setIsOpen(false);
+                    }}
                     className="flex items-center gap-1 font-mono justify-center bg-white hover:opacity-90 transition-opacity text-black font-semibold w-full py-2 rounded"
                   >
                     Add <FiPlus className="inline center" />

@@ -218,6 +218,7 @@ const Card = ({ onClick, selects, cartoon }: CardProps) => {
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             {...cartoon}
+            cartoon={cartoon}
           />
         </div>
       )}

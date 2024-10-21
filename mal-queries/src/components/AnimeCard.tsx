@@ -99,6 +99,7 @@ const TiltCard: FC<{ cartoon: CartoonType }> = ({ cartoon }) => {
         <AnimeDetailModal
           {...cartoon}
           isOpen={isOpen}
+          cartoon={cartoon}
           setIsOpen={handleModalClose} // Use handleModalClose to reset mouse tracking when the modal closes
         />
         <div className="p-4 absolute inset-0 bg-black rounded-xl z-10 opacity-60 flex flex-col"></div>
