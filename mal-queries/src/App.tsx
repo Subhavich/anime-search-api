@@ -19,11 +19,11 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <ModalContextProvider>
-      <UserContextProvider>
+    <UserContextProvider>
+      <ModalContextProvider>
         <RouterProvider router={router} />
-      </UserContextProvider>
-    </ModalContextProvider>
+      </ModalContextProvider>
+    </UserContextProvider>
   );
 }
 
