@@ -15,14 +15,15 @@ const HomePage = () => {
     setError(null);
 
     let anime: CartoonType | null = null;
-
+    let count: number = 0;
     while (
       !anime ||
       !anime.synopsis ||
       anime.rating === "Rx - Hentai" ||
       !anime.score ||
-      !anime.trailer.embed_url
+      (!anime.trailer.embed_url && count < 3)
     ) {
+      count++;
       try {
         const resData = await fetchRandomAnime();
         anime = resData.data;
