@@ -1,7 +1,6 @@
-import { div } from "framer-motion/client";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { FaSadTear, FaTrash } from "react-icons/fa";
-import { PiCloudSnowLight } from "react-icons/pi";
+import { UserContext } from "../store/user-context";
 
 const DEFAULT_CARDS = [
   {
@@ -148,6 +147,8 @@ const MyBoard = () => {
 };
 
 const Board = () => {
+  const userData = useContext(UserContext);
+  const { savedAnime, setSavedAnime } = userData;
   const [cards, setCards] = useState([...DEFAULT_CARDS]);
   return (
     <div className="flex h-full w-full gap-3 overflow-scroll p-12">
@@ -181,7 +182,6 @@ const Column = ({ title, headingColor, column, cards, setCards }) => {
   const [active, setActive] = useState(false);
   const handleDragStart = (e, card) => {
     e.dataTransfer.setData("cardId", card.id);
-    // console.log(card.id);
   };
   const handleDragOver = (e) => {
     e.preventDefault();
