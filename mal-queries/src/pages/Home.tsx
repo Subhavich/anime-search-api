@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { FC, useEffect, useState, useRef } from "react";
 import { fetchRandomAnime } from "../http";
 import { CartoonType } from "../types";
+import SearchBar from "../components/Search";
 
 const HomePage = () => {
   const [randomAnime, setRandomAnime] = useState<CartoonType | null>();
@@ -48,7 +49,9 @@ const HomePage = () => {
 
   return (
     <main className="max-w-5xl mx-auto ">
-      <div className="grid grid-cols-12 ">
+      <p className="text-center text-3xl my-8">Generate Random Anime!</p>
+      {/* Main Card */}
+      <div className="grid grid-cols-12 mb-8 ">
         <div className="grid col-span-4 h-96">
           {isFetching && (
             <p className="w-72 h-94 my-auto text-center text-2xl font-semibold text-neutral-500 animate-bounce">
@@ -72,7 +75,9 @@ const HomePage = () => {
                 {randomAnime.title}
               </p>
               <TagSection cartoon={randomAnime} />
-              <p className="line-clamp-4">{randomAnime.synopsis}</p>
+              <p className="line-clamp-4 leading-loose">
+                {randomAnime.synopsis}
+              </p>
             </div>
           )}
           {/* Button Group */}
@@ -89,6 +94,9 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+      <hr className="opacity-80" />
+      {/* Search Bar */}
+      <SearchBar />
     </main>
   );
 };
@@ -98,8 +106,6 @@ export default HomePage;
 export const TagSection: FC<{ cartoon: CartoonType }> = ({ cartoon }) => {
   return (
     <div className="flex space-x-2 ">
-      <p>Tag Section</p>
-      <p>{" | "}</p>
       <p>{cartoon.aired.string}</p>
       <p>{" | "}</p>
       <p>{cartoon.status}</p>
