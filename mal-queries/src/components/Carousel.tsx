@@ -74,7 +74,7 @@ const CardCarousel: FC<{
 
   return (
     <AnimatePresence>
-      <section className="min-h-96" ref={ref}>
+      <section className="min-h-96 py-8" ref={ref}>
         {isFetching && (
           <p className="pt-32 w-full text-center text-2xl font-semibold text-neutral-500 animate-bounce mx-auto max-w-6xl">
             Loading ...
