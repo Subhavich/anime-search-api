@@ -105,7 +105,7 @@ const AnimeDetailModal: FC<AnimeDetailModalType> = ({
               <div className="relative z-10 p-4">
                 <div className="grid grid-cols-12 min-h-36 gap-4 ">
                   {/* left */}
-                  <div className=" col-span-6 overflow-hidden pr-4">
+                  <div className=" col-span-6 overflow-hidden space-y-2 pr-4">
                     <div className="relative">
                       <div className="absolute z-10 bg-gradient-to-t from-neutral-900 to-transparent inset-0"></div>
 
