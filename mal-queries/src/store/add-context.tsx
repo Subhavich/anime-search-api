@@ -54,7 +54,15 @@ export const StatusModal: FC<StatusProps> = ({ message }) => {
 
   const { adding } = addData;
 
-  return <Portal>{adding && <div className="text-xl">{message}</div>}</Portal>;
+  return (
+    <Portal>
+      {adding && (
+        <div className="text-xl bg-transparent fixed top-1/2 left-1/2">
+          {message}
+        </div>
+      )}
+    </Portal>
+  );
 };
 
 export default AddContextProvider;
