@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, ReactNode } from "react";
-import { CartoonType, CardType } from "../types";
+import { CardType } from "../types";
 
 // Define the type for the context value
 export interface UserContextType {
@@ -22,7 +22,7 @@ interface UserContextProviderProps {
 const UserContextProvider: React.FC<UserContextProviderProps> = ({
   children,
 }) => {
-  const [savedAnime, setSavedAnime] = useState<CartoonType[]>(() => {
+  const [savedAnime, setSavedAnime] = useState<CardType[]>(() => {
     // Load saved data from localStorage on initial render
     const savedData = localStorage.getItem("savedAnime");
     return savedData ? JSON.parse(savedData) : [];
