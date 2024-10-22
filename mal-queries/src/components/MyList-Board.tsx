@@ -139,7 +139,7 @@ const Column: FC<ColumnProps> = ({
     setCards(copy);
   };
 
-  const highlightIndicator = (e) => {
+  const highlightIndicator = (e: DragEvent) => {
     const indicators = getIndicators();
     clearHighlights(indicators);
     const el = getNearestIndicator(e, indicators);
@@ -173,7 +173,7 @@ const Column: FC<ColumnProps> = ({
     );
     return el;
   };
-  const getIndicators = () => {
+  const getIndicators = (): HTMLElement[] => {
     return Array.from(
       document.querySelectorAll(`
         [data-column="${column}"]`)
