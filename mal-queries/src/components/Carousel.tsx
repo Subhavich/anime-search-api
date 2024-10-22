@@ -221,6 +221,7 @@ const Card = ({ onClick, selects, cartoon }: CardProps) => {
             <FiPlus className="size-10" />
           </div>
           <AnimeDetailModal
+            {...cartoon}
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             cartoon={cartoon}
