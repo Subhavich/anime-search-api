@@ -16,11 +16,11 @@ const Board = () => {
   if (!userData) {
     return;
   }
-  const { savedAnime, setSavedAnime, clearAllData } = userData;
+  const { savedAnime, setSavedAnime } = userData;
 
   return (
     <>
-      <div className="mx-auto max-w-5xl">
+      {/* <div className="mx-auto max-w-5xl">
         <button
           className="px-2 py-1 border border-rose-300"
           onClick={clearAllData}
@@ -30,8 +30,8 @@ const Board = () => {
         {savedAnime.map((anime) => (
           <p>{anime.title}</p>
         ))}
-      </div>
-      <div className="flex h-full w-full gap-3  p-12 max-w-5xl mx-auto">
+      </div> */}
+      <div className="flex flex-col items-center sm:flex-row h-full w-full gap-3  p-12 max-w-5xl mx-auto">
         <Column
           title="To Watch"
           headingColor="text-white"

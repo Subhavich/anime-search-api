@@ -49,7 +49,14 @@ const HomePage = () => {
 
   return (
     <>
-      <main className="max-w-5xl mx-auto ">
+      <main
+        className="max-w-5xl mx
+      
+      
+      
+      
+      -auto "
+      >
         <p className="text-center text-3xl my-16">Generate Random Anime!</p>
         {/* Main Card */}
         <div className="grid grid-cols-12 mb-8 ">
@@ -84,15 +91,15 @@ const HomePage = () => {
             {/* Button Group */}
             <div className="flex flex-col items-center pt-8 sm:pt-0 space-y-8 sm:space-y-0 sm:flex-row sm:space-x-4 sm:text-xl">
               <button
-                className="text-base  px-2 py-1 hover:bg-white transition-colors max-w-48 border border-neutral-500 text-lg rounded-lg text-neutral-500"
+                className="  px-2 py-1 hover:bg-white transition-colors max-w-48 border border-neutral-500 text-lg rounded-lg text-neutral-500"
                 onClick={fetchRandom}
               >
                 Get Random Anime
               </button>
-              <button className="text-base  px-2 py-1 hover:bg-white transition-colors max-w-48 border border-neutral-500 text-lg rounded-lg text-neutral-500">
+              <button className="  px-2 py-1 hover:bg-white transition-colors max-w-48 border border-neutral-500 text-lg rounded-lg text-neutral-500">
                 <Link to={"/app"}>Browse Top Animes</Link>
               </button>
-              <button className="text-base  px-2 py-1 hover:bg-white transition-colors max-w-48 border border-neutral-500 text-lg rounded-lg text-neutral-500">
+              <button className="  px-2 py-1 hover:bg-white transition-colors max-w-48 border border-neutral-500 text-lg rounded-lg text-neutral-500">
                 <a href="#search">Advanced Search</a>
               </button>
             </div>
