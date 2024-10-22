@@ -43,7 +43,10 @@ const SearchBar = () => {
   const typeRef = useRef<HTMLSelectElement>(null);
   // Event handler to log or update query
   const handleUpdateQuery = () => {
-    setTampered(true);
+    setTimeout(() => {
+      setTampered(true);
+    }, 500);
+
     setFormData((pv) => {
       if (
         startRef.current &&
@@ -194,12 +197,12 @@ const SearchBar = () => {
       </div>
       <div className="h-84">
         {!tampered && (
-          <div className=" max-w-5xl mx-auto text-xl animate-bounce text-center ">
+          <div className="min-h-84 max-w-5xl mx-auto text-xl animate-bounce text-center ">
             <p className="my-32">Set Your Search Parameters and Click SEARCH</p>
           </div>
         )}
         {isfetching && (
-          <div className="max-w-5xl mx-auto text-xl animate-bounce text-center">
+          <div className=" max-w-5xl mx-auto text-xl animate-bounce text-center">
             <p className="my-32">Loading</p>
           </div>
         )}
