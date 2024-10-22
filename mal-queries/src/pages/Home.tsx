@@ -117,7 +117,7 @@ export default HomePage;
 
 export const TagSection: FC<{ cartoon: CartoonType }> = ({ cartoon }) => {
   return (
-    <div className="flex space-x-2  text-xs sm:text-base justify-center sm:justify-start">
+    <div className="flex space-x-2 mx-auto sm:mx-0 text-xs sm:text-base justify-center sm:justify-start">
       <p>{cartoon.aired.string}</p>
       <p>{" | "}</p>
       <p>{cartoon.status}</p>

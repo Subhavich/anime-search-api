@@ -126,7 +126,7 @@ const AnimeDetailModal: FC<AnimeDetailModalType> = ({
                   {/* right */}
                   <div className="col-span-12 text-center sm:text-left sm:col-span-6 space-y-1 sm:space-y-4 font-mono">
                     <p className="text-2xl font-bold">TAGS</p>
-                    <div className="flex gap-4 flex-wrap ">
+                    <div className="flex gap-4 flex-wrap sm:justify-start justify-center">
                       {genres.map((genre: GenreType) => (
                         <span className="text-lg" key={genre.name}>
                           {genre.name.toUpperCase()}
