@@ -88,7 +88,7 @@ const Column: FC<ColumnProps> = ({
     setActive(true);
   };
 
-  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDragLeave = () => {
     setActive(false);
     clearHighlights();
   };
