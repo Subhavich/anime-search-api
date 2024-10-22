@@ -248,7 +248,7 @@ const Card: FC<CardProp> = ({
   );
 };
 
-const DropIndicator: FC<{ beforeId: string; column: ColumnProps }> = ({
+const DropIndicator: FC<{ beforeId: string; column: string }> = ({
   beforeId,
   column,
 }) => {
