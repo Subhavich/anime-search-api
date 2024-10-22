@@ -10,7 +10,11 @@ const generateQueryString = (params: {
   type: string;
 }) => {
   const queryString = Object.entries(params)
-    .filter(([key, value]) => value)
+    .filter(([key, value]) => {
+      if (key) {
+        return value;
+      }
+    })
     .map(
       ([key, value]) =>
         `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
@@ -24,8 +28,8 @@ const SearchBar = () => {
   const [animeList, setAnimeList] = useState([]);
   const [isfetching, setIsFetching] = useState(false);
   const [formData, setFormData] = useState({
-    start_date: "1989-11-11",
-    end_date: "2020-11-11",
+    start_date: "",
+    end_date: "",
     status: "",
     q: "",
     type: "",
@@ -36,7 +40,6 @@ const SearchBar = () => {
   const statusRef = useRef<HTMLSelectElement>(null); // Ref for a select element
   const stringRef = useRef<HTMLInputElement>(null); // Ref for another input element
   const typeRef = useRef<HTMLSelectElement>(null);
-
   // Event handler to log or update query
   const handleUpdateQuery = () => {
     setFormData((pv) => {
@@ -63,6 +66,7 @@ const SearchBar = () => {
     const fetchList = async () => {
       try {
         const resData = await fetchAnimeParams(generateQueryString(formData));
+        console.log(generateQueryString(formData));
         const animeList = resData.data;
         setAnimeList(animeList);
       } catch (err) {
@@ -120,13 +124,16 @@ const SearchBar = () => {
                 type="date"
                 id="start-date"
                 ref={startRef}
-                defaultValue="1989-11-11"
+                defaultValue=""
                 className="w-full p-1 my-1 bg-transparent border border-neutral-500 rounded-md"
               />
               <button
                 className=""
                 onClick={() => {
-                  startRef.current.value = undefined;
+                  if (!startRef.current) {
+                    return;
+                  }
+                  startRef.current.value = "";
                 }}
               >
                 Clear
@@ -141,13 +148,16 @@ const SearchBar = () => {
                 type="date"
                 id="end-date"
                 ref={endRef}
-                defaultValue="2020-11-11"
+                defaultValue=""
                 className="w-full p-1 my-1 bg-transparent border border-neutral-500 rounded-md"
               />
               <button
                 className=""
                 onClick={() => {
-                  endRef.current.value = undefined;
+                  if (!endRef.current) {
+                    return;
+                  }
+                  endRef.current.value = "";
                 }}
               >
                 Clear
