@@ -49,14 +49,7 @@ const HomePage = () => {
 
   return (
     <>
-      <main
-        className="max-w-5xl mx
-      
-      
-      
-      
-      -auto "
-      >
+      <main className="max-w-5xl mx-auto ">
         <p className="text-center text-3xl my-16">Generate Random Anime!</p>
         {/* Main Card */}
         <div className="grid grid-cols-12 mb-8 ">
