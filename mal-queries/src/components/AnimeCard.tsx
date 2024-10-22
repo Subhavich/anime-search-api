@@ -20,7 +20,7 @@ const TiltCard: FC<{ cartoon: CartoonType }> = ({ cartoon }) => {
   if (!modalData) {
     return null;
   }
-  const { setIsOpen, AnimeDetailModal, isOpen } = modalData;
+  const { setIsOpen, AnimeDetailModal, isOpen, setSelectedAnime } = modalData;
 
   const ref = useRef<HTMLDivElement>(null);
   const [isMouseTracking, setIsMouseTracking] = useState(true);
@@ -58,6 +58,7 @@ const TiltCard: FC<{ cartoon: CartoonType }> = ({ cartoon }) => {
   };
 
   const handleClick = () => {
+    setSelectedAnime({ ...cartoon });
     setIsOpen(true);
     x.set(0);
     y.set(0);

@@ -66,23 +66,23 @@ interface AnimeDetailModalType extends CartoonType {
 
 // Modal Component
 const AnimeDetailModal: FC<AnimeDetailModalType> = ({
-  title,
   isOpen,
   setIsOpen,
-  synopsis,
-  trailer,
-  images,
-  genres,
-  score,
-  scored_by,
-  aired,
+
   cartoon,
 }) => {
   const userData = useContext(UserContext);
   if (!userData) {
     return;
   }
+
   const { setSavedAnime } = userData;
+  const { selectedAnime } = useContext(ModalContext);
+  if (!selectedAnime) {
+    return;
+  }
+  const { title, synopsis, trailer, images, genres, score, scored_by, aired } =
+    selectedAnime;
 
   return (
     <AnimatePresence>

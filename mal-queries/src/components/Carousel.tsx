@@ -176,7 +176,7 @@ const Card = ({ onClick, selects, cartoon }: CardProps) => {
 
   const modalData: ModalContextType | undefined = useContext(ModalContext);
   if (!modalData) return;
-  const { isOpen, setIsOpen, AnimeDetailModal } = modalData;
+  const { setSelectedAnime, isOpen, setIsOpen, AnimeDetailModal } = modalData;
 
   return (
     <>
@@ -207,7 +207,10 @@ const Card = ({ onClick, selects, cartoon }: CardProps) => {
         <div className="mt-8 flex justify-end px-6 space-x-4 hover:cursor-pointer">
           <div
             className="  hover:animate-bounce"
-            onClick={() => setIsOpen(true)}
+            onClick={() => {
+              setSelectedAnime({ ...cartoon });
+              setIsOpen(true);
+            }}
           >
             <FiMaximize2 className="size-10" />
           </div>
@@ -220,7 +223,6 @@ const Card = ({ onClick, selects, cartoon }: CardProps) => {
           <AnimeDetailModal
             isOpen={isOpen}
             setIsOpen={setIsOpen}
-            {...cartoon}
             cartoon={cartoon}
           />
         </div>
