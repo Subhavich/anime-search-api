@@ -105,7 +105,7 @@ const HomePage = () => {
         />
         {/* Search Bar */}
       </main>
-      <section className="pb-32">
+      <section className="pb-2">
         <p className="text-center text-3xl my-16">Advanced Search</p>
         <SearchBar />
       </section>

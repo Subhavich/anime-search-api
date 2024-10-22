@@ -35,6 +35,7 @@ const SearchBar = () => {
     q: "",
     type: "",
   });
+  const [tampered, setTampered] = useState(false);
 
   const startRef = useRef<HTMLInputElement>(null); // Ref for an input element
   const endRef = useRef<HTMLInputElement>(null); // Ref for an input element
@@ -43,6 +44,7 @@ const SearchBar = () => {
   const typeRef = useRef<HTMLSelectElement>(null);
   // Event handler to log or update query
   const handleUpdateQuery = () => {
+    setTampered(true);
     setFormData((pv) => {
       if (
         startRef.current &&
@@ -63,6 +65,9 @@ const SearchBar = () => {
     });
   };
   useEffect(() => {
+    if (!tampered) {
+      return;
+    }
     setIsFetching(true);
     const fetchList = async () => {
       try {
@@ -188,22 +193,33 @@ const SearchBar = () => {
           </button>
         </div>
       </div>
-
-      {!isfetching && animeList.length > 0 && (
-        <CardCarousel
-          runningNumber={1}
-          cartoons={animeList}
-          isFetching={isfetching}
-        />
-      )}
-      {!isfetching && animeList.length === 0 && (
-        <div className="max-w-5xl mx-auto">
-          <p className="text-lg text-center my-16 text-rose-400">
-            Couldn't find anime with current parameters, please try changing the
-            filter
-          </p>
-        </div>
-      )}
+      <div className="h-84">
+        {!tampered && (
+          <div className=" max-w-5xl mx-auto text-xl animate-bounce text-center ">
+            <p className="my-32">Set Your Search Parameters and Click SEARCH</p>
+          </div>
+        )}
+        {isfetching && (
+          <div className="max-w-5xl mx-auto text-xl animate-bounce text-center">
+            <p className="my-32">Loading</p>
+          </div>
+        )}
+        {tampered && !isfetching && animeList.length > 0 && (
+          <CardCarousel
+            runningNumber={1}
+            cartoons={animeList}
+            isFetching={isfetching}
+          />
+        )}
+        {tampered && !isfetching && animeList.length === 0 && (
+          <div className="max-w-5xl mx-auto">
+            <p className="text-lg text-center my-16 text-rose-400">
+              Couldn't find anime with current parameters, please try changing
+              the filter
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
