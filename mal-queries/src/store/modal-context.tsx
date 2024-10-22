@@ -1,11 +1,10 @@
-import { createContext, useState, ReactNode, FC } from "react";
+import { createContext, useState, ReactNode, FC, Dispatch } from "react";
 import { createPortal } from "react-dom";
 import { CartoonType, GenreType } from "../types";
 import { AnimatePresence, motion } from "framer-motion";
 import { FiPlus } from "react-icons/fi";
-import { useContext } from "react";
+import { useContext, SetStateAction } from "react";
 import { UserContext } from "./user-context";
-
 interface PortalProps {
   children: ReactNode;
 }
@@ -60,6 +59,7 @@ interface AnimeDetailModalType extends CartoonType {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   cartoon: CartoonType;
+  setAdding: Dispatch<SetStateAction<boolean>>;
 }
 
 // Modal Component
@@ -67,6 +67,7 @@ const AnimeDetailModal: FC<AnimeDetailModalType> = ({
   isOpen,
   setIsOpen,
   cartoon,
+  setAdding,
 }) => {
   const userData = useContext(UserContext);
   if (!userData) {
@@ -167,7 +168,9 @@ const AnimeDetailModal: FC<AnimeDetailModalType> = ({
                         ...pv,
                         { ...cartoon, column: "toWatch", id: cartoon.mal_id },
                       ]);
+
                       setIsOpen(false);
+                      setAdding(true);
                     }}
                     className="flex items-center gap-1 font-mono justify-center bg-white hover:opacity-90 transition-opacity text-black font-semibold w-full py-2 rounded"
                   >

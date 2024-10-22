@@ -11,6 +11,7 @@ import { CartoonType } from "../types";
 import { UserContext, UserContextType } from "../store/user-context";
 import { fetchAnimeById } from "../http";
 import { ModalContext, ModalContextType } from "../store/modal-context";
+import { AddContext } from "../store/add-context";
 
 // Carousel Config
 const CARD_WIDTH = 240;
@@ -158,6 +159,11 @@ interface CardProps {
 }
 
 const Card = ({ onClick, selects, cartoon }: CardProps) => {
+  const addData = useContext(AddContext);
+  if (!addData) {
+    return;
+  }
+  const { StatusModal, setAdding } = addData;
   const userData: UserContextType | undefined = useContext(UserContext);
   if (!userData) return;
   const { images, title, score, year, mal_id } = cartoon;
@@ -225,7 +231,9 @@ const Card = ({ onClick, selects, cartoon }: CardProps) => {
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             cartoon={cartoon}
+            setAdding={setAdding}
           />
+          <StatusModal message={`${title} Added`} />
         </div>
       )}
     </>

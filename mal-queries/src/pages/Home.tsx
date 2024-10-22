@@ -4,6 +4,7 @@ import { FC, useEffect, useState, useRef } from "react";
 import { fetchRandomAnime } from "../http";
 import { CartoonType } from "../types";
 import SearchBar from "../components/Search";
+import { StatusModal } from "../store/add-context";
 
 const HomePage = () => {
   const [randomAnime, setRandomAnime] = useState<CartoonType | null>();
@@ -50,6 +51,7 @@ const HomePage = () => {
   return (
     <>
       <main className="max-w-5xl mx-auto ">
+        <StatusModal message="messiah" />
         <p className="text-center text-3xl my-16">Generate Random Anime!</p>
         {/* Main Card */}
         <div className="grid grid-cols-12 mb-8 ">

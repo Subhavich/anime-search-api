@@ -16,7 +16,7 @@ export interface AddContextType {
   setBackground: Dispatch<SetStateAction<boolean>>; // Correct setter type
   adding: boolean;
   setAdding: Dispatch<SetStateAction<boolean>>; // Correct setter type
-  statusModal: FC<StatusProps>;
+  StatusModal: FC<StatusProps>;
 }
 
 // Step 3: Create the context
@@ -35,7 +35,7 @@ export const AddContextProvider: FC<{ children: ReactNode }> = ({
         setBackground,
         adding,
         setAdding,
-        statusModal: StatusModal,
+        StatusModal,
       }}
     >
       {children}
@@ -57,7 +57,7 @@ export const StatusModal: FC<StatusProps> = ({ message }) => {
   return (
     <Portal>
       {adding && (
-        <div className="text-xl bg-transparent fixed top-1/2 left-1/2">
+        <div className="text-5xl text-white bg-transparent fixed top-1/2 left-1/2 shadow-lg">
           {message}
         </div>
       )}
