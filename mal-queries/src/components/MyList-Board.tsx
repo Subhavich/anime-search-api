@@ -75,20 +75,24 @@ const Column: FC<ColumnProps> = ({
   setCards,
 }) => {
   const [active, setActive] = useState(false);
-  const handleDragStart = (e: DragEvent, card: CardType) => {
+  const handleDragStart = (
+    e: React.DragEvent<HTMLDivElement>,
+    card: CardType
+  ) => {
     e.dataTransfer.setData("cardId", card.id.toString());
   };
-  const handleDragOver = (e: DragEvent) => {
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    highlightIndicator(e);
+    const nativeEvent = e.nativeEvent;
+    highlightIndicator(nativeEvent);
     setActive(true);
   };
 
-  const handleDragLeave = (e: DragEvent) => {
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     setActive(false);
     clearHighlights();
   };
-  const handleDragEnd = (e: DragEvent) => {
+  const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
     setActive(false);
     clearHighlights();
 
@@ -99,9 +103,12 @@ const Column: FC<ColumnProps> = ({
     const indicators = getIndicators();
 
     // Find the nearest indicator based on the mouse event
-    const { element } = getNearestIndicator(e, indicators);
+    const { element } = getNearestIndicator(e.nativeEvent, indicators);
 
     // Get the 'before' value from the dataset of the nearest indicator
+    if (!element.dataset.before) {
+      return;
+    }
     const before = parseInt(element.dataset.before, 10);
 
     // If the 'before' value is the same as the cardId, no movement is necessary
@@ -146,7 +153,7 @@ const Column: FC<ColumnProps> = ({
     el.element.style.opacity = "1";
   };
 
-  const clearHighlights = (els) => {
+  const clearHighlights = (els?: HTMLElement[]) => {
     const indicators = els || getIndicators();
     indicators.forEach((i: HTMLElement) => {
       i.style.opacity = "0";
@@ -201,7 +208,7 @@ const Column: FC<ColumnProps> = ({
         {filteredCards.map((c) => {
           return <Card handleDragStart={handleDragStart} key={c.id} {...c} />;
         })}
-        <DropIndicator beforeId={-1} column={column} />
+        <DropIndicator beforeId={"-1"} column={column} />
       </div>
     </div>
   );
@@ -221,7 +228,7 @@ const Card: FC<CardProp> = ({
 }) => {
   return (
     <>
-      <DropIndicator beforeId={id} column={column} />
+      <DropIndicator beforeId={id.toString()} column={column} />
       <div
         draggable="true"
         onDragStart={(e) => handleDragStart(e, { title, id, column })}
@@ -253,19 +260,22 @@ const DropIndicator: FC<{ beforeId: string; column: ColumnProps }> = ({
     ></div>
   );
 };
+interface BurnBarrelProps {
+  setCards: React.Dispatch<React.SetStateAction<CardType[]>>;
+}
 
-const BurnBarrel = ({ setCards }) => {
-  const handleDragOver = (e) => {
+const BurnBarrel: FC<BurnBarrelProps> = ({ setCards }) => {
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setActive(true);
   };
   const handleDragLeave = () => {
     setActive(false);
   };
-  const handleDragEnd = (e) => {
+  const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
     const cardId = e.dataTransfer.getData("cardId");
-    setCards((prev) => {
-      return prev.filter((c) => c.id != cardId);
+    setCards((prev: CardType[]) => {
+      return prev.filter((c) => c.id.toString() != cardId);
     });
     setActive(false);
   };
