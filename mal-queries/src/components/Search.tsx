@@ -96,7 +96,7 @@ const SearchBar = () => {
               name="status"
               id="status"
               ref={statusRef}
-              className=" p-1 my-1 bg-transparent border border-neutral-500 rounded-md"
+              className=" p-1 my-1 bg-neutral-800 border border-neutral-500 rounded-md"
             >
               <option value="">Any</option>
               <option value="airing">Airing</option>
@@ -111,7 +111,7 @@ const SearchBar = () => {
               name="type"
               id="type"
               ref={typeRef}
-              className=" p-1 my-1 bg-transparent border border-neutral-500 rounded-md"
+              className=" p-1 my-1 bg-neutral-800 border border-neutral-500 rounded-md"
             >
               <option value="tv">TV</option>
               <option value="movie">Movie</option>
@@ -133,7 +133,7 @@ const SearchBar = () => {
                 id="start-date"
                 ref={startRef}
                 defaultValue=""
-                className="w-full p-1 my-1 bg-transparent border border-neutral-500 rounded-md"
+                className=" bg-neutral-800 w-full p-1 my-1  border  border-neutral-500 rounded-md"
               />
               <button
                 className=""
@@ -157,7 +157,7 @@ const SearchBar = () => {
                 id="end-date"
                 ref={endRef}
                 defaultValue=""
-                className="w-full p-1 my-1 bg-transparent border border-neutral-500 rounded-md"
+                className="w-full p-1 my-1 bg-neutral-800 border border-neutral-500 rounded-md"
               />
               <button
                 className=""
@@ -183,7 +183,7 @@ const SearchBar = () => {
           <input
             id="search"
             ref={stringRef}
-            className="bg-transparent text-center px-4 m-1 text-xl border border-neutral-500 rounded-md min-h-12"
+            className="bg-neutral-800 text-center px-4 m-1 text-xl border border-neutral-500 rounded-md min-h-12"
             placeholder="..."
           />
 
