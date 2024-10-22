@@ -20,16 +20,29 @@ export default RootLayout;
 
 const Navbar = () => {
   return (
-    <nav className="max-w-5xl z-50 fixed left-[50%] top-8 flex justify-center w-full -translate-x-[50%] items-center gap-6 rounded-lg border-[1px] border-neutral-700 bg-neutral-900 p-4 text-sm text-neutral-500">
-      <p>
-        <NavLink to="/">Anime Browser</NavLink>
-      </p>
-      <div className="py-2 px-2 flex items-center overflow-hidden grow justify-end space-x-8">
-        <Navigation route="">Home</Navigation>
-        <Navigation route="app">App</Navigation>
-        <MyListButton route="mylist" />
-      </div>
-    </nav>
+    <>
+      <nav className=" max-w-5xl z-50 fixed left-[50%] top-8 sm:flex hidden justify-center w-full -translate-x-[50%] items-center gap-6 rounded-lg border-[1px] border-neutral-700 bg-neutral-900 p-4 text-sm text-neutral-500">
+        <p>
+          <NavLink to="/">Anime Browser</NavLink>
+        </p>
+        <div className="py-2 px-2 flex items-center overflow-hidden grow justify-end space-x-8">
+          <Navigation route="">Home</Navigation>
+          <Navigation route="app">App</Navigation>
+          <MyListButton route="mylist" />
+        </div>
+      </nav>
+      {/* nav-smalls */}
+      <nav className="sm:hidden space-y-8">
+        <p className="text-center text-2xl mt-4">
+          <NavLink to="/">Anime Browser</NavLink>
+        </p>
+        <div className="  py-2 px-2 flex items-center overflow-hidden grow justify-center space-x-8">
+          <Navigation route="">Home</Navigation>
+          <Navigation route="app">App</Navigation>
+          <MyListButton route="mylist" />
+        </div>
+      </nav>
+    </>
   );
 };
 
@@ -69,6 +82,7 @@ const MyListButton: FC<{ route: string }> = ({ route }) => {
           relative z-0 flex items-center gap-2 overflow-hidden whitespace-nowrap rounded-lg border-[1px]
           border-neutral-700 px-4 py-1.5 font-medium
          text-neutral-300 transition-all duration-300
+         text-sm
 
           before:absolute before:inset-0
           before:-z-10 before:translate-y-[200%]

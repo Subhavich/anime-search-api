@@ -79,7 +79,7 @@ const TiltCard: FC<{ cartoon: CartoonType }> = ({ cartoon }) => {
         transformStyle: "preserve-3d",
         transform,
       }}
-      className="relative h-96 w-72 rounded-xl bg-neutral-800"
+      className="relative h-96 w-72 rounded-xl bg-neutral-800 "
     >
       <div
         style={{

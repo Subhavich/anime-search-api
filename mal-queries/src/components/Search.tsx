@@ -89,7 +89,7 @@ const SearchBar = () => {
   return (
     <div className="text-md my-8 ">
       <div className="max-w-5xl mx-auto grid grid-cols-12 mb-12">
-        <div className="col-span-4">
+        <div className="col-span-12 mx-auto max-w-80 sm:max-w-full sm:col-span-4">
           <div className="flex flex-col">
             <label htmlFor="status">Select Anime Status</label>
             <select
@@ -176,14 +176,17 @@ const SearchBar = () => {
           <div className="flex flex-col"></div>
         </div>
 
-        <div className="col-span-8 pl-16 flex flex-col justify-between items-center">
-          <label htmlFor="search" className="w-full text-center text-2xl">
+        <div className="col-span-12 mt-8 mx-auto max-w-80 space-y-8 sm:max-w-full sm:col-span-8 sm:pl-16 flex flex-col justify-between items-center">
+          <label
+            htmlFor="search"
+            className="w-full text-center text-base sm:text-2xl"
+          >
             Insert related keywords
           </label>
           <input
             id="search"
             ref={stringRef}
-            className="bg-neutral-800 text-center px-4 m-1 text-xl border border-neutral-500 rounded-md min-h-12"
+            className="bg-neutral-800 text-center px-1 sm:px-4 m-1 sm:text-xl border border-neutral-500 rounded-md min-h-12"
             placeholder="..."
           />
 
