@@ -75,20 +75,20 @@ const Column: FC<ColumnProps> = ({
   setCards,
 }) => {
   const [active, setActive] = useState(false);
-  const handleDragStart = (e, card) => {
-    e.dataTransfer.setData("cardId", card.id);
+  const handleDragStart = (e: DragEvent, card: CardType) => {
+    e.dataTransfer.setData("cardId", card.id.toString());
   };
-  const handleDragOver = (e) => {
+  const handleDragOver = (e: DragEvent) => {
     e.preventDefault();
     highlightIndicator(e);
     setActive(true);
   };
 
-  const handleDragLeave = (e) => {
+  const handleDragLeave = (e: DragEvent) => {
     setActive(false);
     clearHighlights();
   };
-  const handleDragEnd = (e) => {
+  const handleDragEnd = (e: DragEvent) => {
     setActive(false);
     clearHighlights();
 
@@ -148,7 +148,7 @@ const Column: FC<ColumnProps> = ({
 
   const clearHighlights = (els) => {
     const indicators = els || getIndicators();
-    indicators.forEach((i) => {
+    indicators.forEach((i: HTMLElement) => {
       i.style.opacity = "0";
     });
   };
@@ -241,7 +241,10 @@ const Card: FC<CardProp> = ({
   );
 };
 
-const DropIndicator = ({ beforeId, column }) => {
+const DropIndicator: FC<{ beforeId: string; column: ColumnProps }> = ({
+  beforeId,
+  column,
+}) => {
   return (
     <div
       data-before={beforeId || "-1"}
