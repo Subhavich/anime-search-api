@@ -1,4 +1,4 @@
-import { NavLink, Outlet, Route } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import { FC } from "react";
 import { motion } from "framer-motion";
 import { useContext } from "react";
