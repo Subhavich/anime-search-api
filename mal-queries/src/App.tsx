@@ -5,6 +5,7 @@ import RootLayout from "./pages/Root";
 import UserContextProvider from "./store/user-context";
 import ModalContextProvider from "./store/modal-context";
 import MyListPage from "./pages/MyList";
+import AddContextProvider from "./store/add-context";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -19,11 +20,13 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <UserContextProvider>
-      <ModalContextProvider>
-        <RouterProvider router={router} />
-      </ModalContextProvider>
-    </UserContextProvider>
+    <AddContextProvider>
+      <UserContextProvider>
+        <ModalContextProvider>
+          <RouterProvider router={router} />
+        </ModalContextProvider>
+      </UserContextProvider>
+    </AddContextProvider>
   );
 }
 
