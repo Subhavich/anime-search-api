@@ -115,24 +115,44 @@ const SearchBar = () => {
 
           <div className="flex flex-col">
             <label htmlFor="start-date">Start Date:</label>
-            <input
-              type="date"
-              id="start-date"
-              ref={startRef}
-              defaultValue="1989-11-11"
-              className=" p-1 my-1 bg-transparent border border-neutral-500 rounded-md"
-            />
+            <div className="flex justify-around gap-4">
+              <input
+                type="date"
+                id="start-date"
+                ref={startRef}
+                defaultValue="1989-11-11"
+                className="w-full p-1 my-1 bg-transparent border border-neutral-500 rounded-md"
+              />
+              <button
+                className=""
+                onClick={() => {
+                  startRef.current.value = undefined;
+                }}
+              >
+                Clear
+              </button>
+            </div>
           </div>
 
           <div className="flex flex-col">
             <label htmlFor="end-date">End Date:</label>
-            <input
-              type="date"
-              id="end-date"
-              ref={endRef}
-              defaultValue="2020-11-11"
-              className=" p-1 my-1 bg-transparent border border-neutral-500 rounded-md"
-            />
+            <div className="flex justify-around gap-4">
+              <input
+                type="date"
+                id="end-date"
+                ref={endRef}
+                defaultValue="2020-11-11"
+                className="w-full p-1 my-1 bg-transparent border border-neutral-500 rounded-md"
+              />
+              <button
+                className=""
+                onClick={() => {
+                  endRef.current.value = undefined;
+                }}
+              >
+                Clear
+              </button>
+            </div>
           </div>
 
           <div className="flex flex-col"></div>
