@@ -31,7 +31,7 @@ const Board = () => {
           <p>{anime.title}</p>
         ))}
       </div> */}
-      <div className="flex flex-col items-center sm:flex-row h-full w-full gap-3  p-12 max-w-5xl mx-auto">
+      <div className="flex flex-col items-center sm:items-start sm:flex-row h-full w-full gap-3  p-12 max-w-5xl mx-auto">
         <Column
           title="To Watch"
           headingColor="text-white"
