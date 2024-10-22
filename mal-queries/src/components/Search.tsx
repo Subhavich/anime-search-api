@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { fetchAnimeParams } from "../http";
 import CardCarousel from "./Carousel";
+import { isFormElement } from "react-router-dom/dist/dom";
 
 const generateQueryString = (params: {
   start_date: string;
@@ -194,6 +195,14 @@ const SearchBar = () => {
           cartoons={animeList}
           isFetching={isfetching}
         />
+      )}
+      {!isfetching && animeList.length === 0 && (
+        <div className="max-w-5xl mx-auto">
+          <p className="text-lg text-center my-16 text-rose-400">
+            Couldn't find anime with current parameters, please try changing the
+            filter
+          </p>
+        </div>
       )}
     </div>
   );
