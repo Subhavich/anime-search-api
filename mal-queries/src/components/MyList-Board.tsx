@@ -207,13 +207,16 @@ const Column: FC<ColumnProps> = ({
   );
 };
 
-const Card = ({
+interface CardProp extends CardType {
+  handleDragStart: Function;
+}
+
+const Card: FC<CardProp> = ({
   title,
   id,
   column,
-  description,
   handleDragStart,
-  synopsis,
+
   images,
 }) => {
   return (
@@ -221,9 +224,7 @@ const Card = ({
       <DropIndicator beforeId={id} column={column} />
       <div
         draggable="true"
-        onDragStart={(e) =>
-          handleDragStart(e, { title, id, column, description })
-        }
+        onDragStart={(e) => handleDragStart(e, { title, id, column })}
         className="brightness-50 hover:brightness-75 transition-all h-24 max-h-40 relative cursor-grab rounded border active:cursor-grabbing overflow-hidden"
       >
         <img
