@@ -22,7 +22,7 @@ const Navbar = () => {
   return (
     <>
       <nav className=" max-w-5xl z-50 fixed left-[50%] top-8 sm:flex hidden justify-center w-full -translate-x-[50%] items-center gap-6 rounded-lg border-[1px] border-neutral-700 bg-neutral-900 p-4 text-sm text-neutral-500">
-        <p>
+        <p className="sm:text-lg">
           <NavLink to="/">Anime Browser</NavLink>
         </p>
         <div className="py-2 px-2 flex items-center overflow-hidden grow justify-end space-x-8">

@@ -108,23 +108,23 @@ const AnimeDetailModal: FC<AnimeDetailModalType> = ({
               <div className="relative z-10 p-4">
                 <div className="grid grid-cols-12 min-h-36 gap-4">
                   {/* left */}
-                  <div className="col-span-6 overflow-hidden space-y-2 pr-4">
+                  <div className="col-span-12 sm:col-span-6 overflow-hidden space-y-2 pr-4">
                     <div className="relative">
                       <div className="absolute z-10 bg-gradient-to-t from-neutral-900 to-transparent inset-0"></div>
                       <img
-                        className="relative object-cover object-left size-96 z-0"
+                        className="relative object-cover object-left w-full max-h-32 sm:max-h-96 sm:size-96 z-0"
                         src={images.webp.large_image_url}
                       />
                     </div>
                     <div className="relative pl-8 line-clamp-2 text-4xl font-mono -mt-12 text-white z-50">
                       {title}
                     </div>
-                    <div className="relative pl-8 line-clamp-4 mb-12">
+                    <div className="relative pl-8 line-clamp-3 sm:line-clamp-4 mb-12">
                       {synopsis}
                     </div>
                   </div>
                   {/* right */}
-                  <div className="col-span-6 space-y-4 font-mono">
+                  <div className="col-span-12 text-center sm:text-left sm:col-span-6 space-y-1 sm:space-y-4 font-mono">
                     <p className="text-2xl font-bold">TAGS</p>
                     <div className="flex gap-4 flex-wrap ">
                       {genres.map((genre: GenreType) => (
@@ -134,7 +134,7 @@ const AnimeDetailModal: FC<AnimeDetailModalType> = ({
                       ))}
                     </div>
                     <p className="text-2xl font-bold">SCORE</p>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 justify-center sm:justify-start">
                       <span>{score}</span>
                       <span>scored by {scored_by} users</span>
                     </div>
