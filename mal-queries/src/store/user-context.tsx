@@ -1,10 +1,11 @@
 import { createContext, useState, useEffect, ReactNode } from "react";
-import { CartoonType } from "../types";
+import { CartoonType, CardType } from "../types";
 
 // Define the type for the context value
 export interface UserContextType {
-  savedAnime: CartoonType[];
-  setSavedAnime: React.Dispatch<React.SetStateAction<CartoonType[]>>;
+  clearAllData: () => void;
+  savedAnime: CardType[];
+  setSavedAnime: React.Dispatch<React.SetStateAction<CardType[]>>;
 }
 
 // Create the context with a default value

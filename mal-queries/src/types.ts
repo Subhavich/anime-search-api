@@ -5,6 +5,11 @@ export interface Genre {
   url: string;
   count: number;
 }
+ export interface CardType extends CartoonType {
+  id: number;
+  column: string;
+}
+
 
 export type ImageType = {
   webp: {

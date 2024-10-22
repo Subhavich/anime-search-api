@@ -1,6 +1,7 @@
-import { useState, useContext } from "react";
+import { useState, useContext, Dispatch, SetStateAction, FC } from "react";
 import { FaSadTear, FaTrash } from "react-icons/fa";
 import { UserContext } from "../store/user-context";
+import { CardType } from "../types";
 
 const MyBoard = () => {
   return (
@@ -12,6 +13,9 @@ const MyBoard = () => {
 
 const Board = () => {
   const userData = useContext(UserContext);
+  if (!userData) {
+    return;
+  }
   const { savedAnime, setSavedAnime, clearAllData } = userData;
 
   return (
@@ -55,7 +59,21 @@ const Board = () => {
   );
 };
 
-const Column = ({ title, headingColor, column, cards, setCards }) => {
+type ColumnProps = {
+  title: string;
+  headingColor: string;
+  cards: CardType[];
+  column: string;
+  setCards: Dispatch<SetStateAction<CardType[]>>;
+};
+
+const Column: FC<ColumnProps> = ({
+  title,
+  headingColor,
+  column,
+  cards,
+  setCards,
+}) => {
   const [active, setActive] = useState(false);
   const handleDragStart = (e, card) => {
     e.dataTransfer.setData("cardId", card.id);
@@ -135,7 +153,7 @@ const Column = ({ title, headingColor, column, cards, setCards }) => {
     });
   };
 
-  const getNearestIndicator = (e, indicators) => {
+  const getNearestIndicator = (e: DragEvent, indicators: HTMLElement[]) => {
     const DISTANCE_OFFSET = 50;
     const el = indicators.reduce(
       (closest, child) => {
