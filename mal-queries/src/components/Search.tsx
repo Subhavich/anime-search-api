@@ -43,10 +43,7 @@ const SearchBar = () => {
   const typeRef = useRef<HTMLSelectElement>(null);
   // Event handler to log or update query
   const handleUpdateQuery = () => {
-    setTimeout(() => {
-      setTampered(true);
-    }, 500);
-
+    // Ensure tampered is set to true, and formData is updated simultaneously
     setFormData((pv) => {
       if (
         startRef.current &&
@@ -65,7 +62,11 @@ const SearchBar = () => {
       }
       return pv;
     });
+
+    // Only set tampered after formData is fully updated
+    setTampered(true);
   };
+
   useEffect(() => {
     if (!tampered) {
       return;
