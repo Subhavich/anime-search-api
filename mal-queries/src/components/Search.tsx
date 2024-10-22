@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { fetchAnimeParams } from "../http";
 import CardCarousel from "./Carousel";
-import { isFormElement } from "react-router-dom/dist/dom";
 
 const generateQueryString = (params: {
   start_date: string;
