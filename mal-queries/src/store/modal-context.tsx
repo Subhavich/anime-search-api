@@ -1,6 +1,6 @@
 import { createContext, useState, ReactNode, FC } from "react";
 import { createPortal } from "react-dom";
-import { CartoonType } from "../types";
+import { CartoonType, GenreType } from "../types";
 import { AnimatePresence, motion } from "framer-motion";
 import { FiPlus } from "react-icons/fi";
 import { useContext } from "react";
@@ -127,7 +127,7 @@ const AnimeDetailModal: FC<AnimeDetailModalType> = ({
                   <div className="col-span-6 space-y-4 font-mono">
                     <p className="text-2xl font-bold">TAGS</p>
                     <div className="flex gap-4 flex-wrap ">
-                      {genres.map((genre) => (
+                      {genres.map((genre: GenreType) => (
                         <span className="text-lg" key={genre.name}>
                           {genre.name.toUpperCase()}
                         </span>
