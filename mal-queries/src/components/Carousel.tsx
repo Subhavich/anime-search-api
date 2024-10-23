@@ -163,7 +163,7 @@ const Card = ({ onClick, selects, cartoon }: CardProps) => {
   if (!addData) {
     return;
   }
-  const { StatusModal, setAdding } = addData;
+
   const userData: UserContextType | undefined = useContext(UserContext);
   if (!userData) return;
   const { images, title, score, year, mal_id } = cartoon;
@@ -231,9 +231,7 @@ const Card = ({ onClick, selects, cartoon }: CardProps) => {
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             cartoon={cartoon}
-            setAdding={setAdding}
           />
-          <StatusModal message={`${title} Added`} />
         </div>
       )}
     </>

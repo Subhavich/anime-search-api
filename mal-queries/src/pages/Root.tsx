@@ -3,14 +3,22 @@ import { FC } from "react";
 import { motion } from "framer-motion";
 import { useContext } from "react";
 import { UserContext, UserContextType } from "../store/user-context";
+import { AddContext } from "../store/add-context";
 
 const RootLayout = () => {
+  const addData = useContext(AddContext);
+  if (!addData) {
+    return null;
+  }
+  const { StatusModal } = addData;
+
   return (
     <>
       <div className="min-h-screen w-full font-mono bg-neutral-950 text-neutral-500">
         <header className=" w-full py-4 mb-8 text-lg font-extrabold h-36">
           <Navbar />
         </header>
+        <StatusModal />
         <Outlet />
       </div>
     </>

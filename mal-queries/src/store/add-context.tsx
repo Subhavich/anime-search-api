@@ -9,14 +9,15 @@ import {
   useContext,
 } from "react";
 import { Portal } from "./modal-context";
+import { AnimatePresence, motion } from "framer-motion";
 
 // Step 1: Define the type for the context value
 export interface AddContextType {
-  background: boolean;
-  setBackground: Dispatch<SetStateAction<boolean>>; // Correct setter type
+  message: string;
+  setMessage: Dispatch<SetStateAction<string>>; // Correct setter type
   adding: boolean;
   setAdding: Dispatch<SetStateAction<boolean>>; // Correct setter type
-  StatusModal: FC<StatusProps>;
+  StatusModal: FC<{}>;
 }
 
 // Step 3: Create the context
@@ -26,13 +27,13 @@ export const AddContext = createContext<AddContextType | undefined>(undefined);
 export const AddContextProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [background, setBackground] = useState(false);
+  const [message, setMessage] = useState("");
   const [adding, setAdding] = useState(false);
   return (
     <AddContext.Provider
       value={{
-        background,
-        setBackground,
+        message,
+        setMessage,
         adding,
         setAdding,
         StatusModal,
@@ -43,24 +44,28 @@ export const AddContextProvider: FC<{ children: ReactNode }> = ({
   );
 };
 
-// Define the props for StatusModal
-interface StatusProps {
-  message: string;
-}
-
-export const StatusModal: FC<StatusProps> = ({ message }) => {
+export const StatusModal: FC<{}> = ({}) => {
   const addData = useContext(AddContext);
   if (!addData) return null;
 
-  const { adding } = addData;
+  const { adding, message } = addData;
 
   return (
     <Portal>
-      {adding && (
-        <div className="text-5xl text-white bg-transparent fixed top-1/2 left-1/2 shadow-lg">
-          {message}
-        </div>
-      )}
+      <AnimatePresence>
+        {adding && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className=" -translate-x-[50%] -translate-y-[50%] text-5xl text-white bg-transparent fixed top-1/2 left-1/2 shadow-lg"
+          >
+            <div className="relative bg-black opacity-65 inset-0">
+              {message}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </Portal>
   );
 };
