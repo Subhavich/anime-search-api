@@ -5,7 +5,7 @@ import { CardType } from "../types";
 
 const MyBoard = () => {
   return (
-    <div className="h-screen w-full mx-auto text-neutral-50">
+    <div className="min-h-screen w-full mx-auto text-neutral-50">
       <Board />
     </div>
   );
@@ -16,21 +16,21 @@ const Board = () => {
   if (!userData) {
     return;
   }
-  const { savedAnime, setSavedAnime, clearAllData } = userData;
+  const { savedAnime, setSavedAnime } = userData;
 
   return (
     <>
-      <div className="mx-auto max-w-5xl">
+      {/* <div className="mx-auto max-w-5xl">
         <button
-          className="px-2 py-1 border text-red-600 border-rose-500"
+          className="px-2 py-1 border border-rose-300"
           onClick={clearAllData}
         >
-          Clear All Entries
+          KILL SWITCH
         </button>
-        {/* {savedAnime.map((anime) => (
+        {savedAnime.map((anime) => (
           <p>{anime.title}</p>
-        ))} */}
-      </div>
+        ))}
+      </div> */}
       <div className="flex flex-col items-center sm:items-start sm:flex-row h-full w-full gap-3  p-12 max-w-5xl mx-auto">
         <Column
           title="To Watch"
@@ -189,7 +189,7 @@ const Column: FC<ColumnProps> = ({
 
   const filteredCards = cards.filter((c) => c.column === column);
   return (
-    <div className="w-56 shrink-0 ">
+    <div className="w-56 shrink-0">
       <div className="mb-3 flex items-center justify-between">
         <h3 className={`font-medium ${headingColor}`}>{title}</h3>
         <span className="rounded text-sm text-neutral-400">
@@ -201,7 +201,7 @@ const Column: FC<ColumnProps> = ({
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
         onDrop={handleDragEnd}
-        className={`h-full w-full transition-colors ${
+        className={`min-h-screen w-full transition-colors ${
           active ? "bg-neutral-800/50" : "bg-neutral-800/0"
         }`}
       >
