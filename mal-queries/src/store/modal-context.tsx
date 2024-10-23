@@ -132,22 +132,30 @@ const AnimeDetailModal: FC<AnimeDetailModalType> = ({
                   </div>
                   {/* right */}
                   <div className="col-span-12 text-center sm:text-left sm:col-span-6 space-y-1 sm:space-y-4 font-mono">
-                    <p className="text-2xl font-bold">TAGS</p>
-                    <div className="flex gap-4 flex-wrap sm:justify-start justify-center">
-                      {genres.map((genre: GenreType) => (
-                        <span className="text-lg" key={genre.name}>
-                          {genre.name.toUpperCase()}
-                        </span>
-                      ))}
-                    </div>
-                    <p className="text-2xl font-bold">SCORE</p>
+                    {genres.length > 0 && (
+                      <>
+                        <p className="text-lg sm:text-2xl font-bold">TAGS</p>
+                        <div className="flex gap-4 flex-wrap sm:justify-start justify-center">
+                          {genres.map((genre: GenreType) => (
+                            <span
+                              className="text-base sm:text-lg"
+                              key={genre.name}
+                            >
+                              {genre.name.toUpperCase()}
+                            </span>
+                          ))}
+                        </div>
+                      </>
+                    )}
+
+                    <p className="text-lg sm:text-2xl font-bold">SCORE</p>
                     <div className="flex gap-2 justify-center sm:justify-start">
                       <span>{score}</span>
                       <span>scored by {scored_by} users</span>
                     </div>
-                    <p className="text-2xl font-bold">DATE</p>
+                    <p className="text-lg sm:text-2xl font-bold">DATE</p>
                     <p>{aired.string}</p>
-                    <p className="text-2xl font-bold">TRAILER</p>
+                    <p className="text-lg sm:text-2xl font-bold">TRAILER</p>
                     <div>
                       {trailer.embed_url ? (
                         <iframe

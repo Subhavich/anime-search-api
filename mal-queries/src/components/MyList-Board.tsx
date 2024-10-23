@@ -16,21 +16,21 @@ const Board = () => {
   if (!userData) {
     return;
   }
-  const { savedAnime, setSavedAnime } = userData;
+  const { savedAnime, setSavedAnime, clearAllData } = userData;
 
   return (
     <>
-      {/* <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-5xl">
         <button
-          className="px-2 py-1 border border-rose-300"
+          className="px-2 py-1 border text-red-600 border-rose-500"
           onClick={clearAllData}
         >
-          KILL SWITCH
+          Clear All Entries
         </button>
-        {savedAnime.map((anime) => (
+        {/* {savedAnime.map((anime) => (
           <p>{anime.title}</p>
-        ))}
-      </div> */}
+        ))} */}
+      </div>
       <div className="flex flex-col items-center sm:items-start sm:flex-row h-full w-full gap-3  p-12 max-w-5xl mx-auto">
         <Column
           title="To Watch"

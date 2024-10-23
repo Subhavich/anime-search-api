@@ -60,7 +60,7 @@ export const StatusModal: FC<{}> = ({}) => {
             exit={{ opacity: 0 }}
             className=" -translate-x-[50%] z-50 -translate-y-[50%] text-5xl text-white bg-transparent fixed top-1/2 left-1/2 shadow-lg"
           >
-            <div className="relative bg-black opacity-65 inset-0">
+            <div className="relative text-center p-8 bg-black opacity-80 scale-125 inset-4">
               {message}
             </div>
           </motion.div>
