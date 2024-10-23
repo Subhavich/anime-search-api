@@ -163,6 +163,7 @@ const Card = ({ onClick, selects, cartoon }: CardProps) => {
   if (!addData) {
     return;
   }
+  const { setMessage, setAdding } = addData;
 
   const userData: UserContextType | undefined = useContext(UserContext);
   if (!userData) return;
@@ -171,6 +172,9 @@ const Card = ({ onClick, selects, cartoon }: CardProps) => {
   const handleFetchAndSave = async (id: number) => {
     const find = savedAnime.find((anime: CartoonType) => anime.mal_id === id);
     if (find) {
+      setMessage(`${cartoon.title} is already added`);
+      setAdding(true);
+      setTimeout(() => setAdding(false), 500);
       return;
     }
     const data = await fetchAnimeById(id);
@@ -178,6 +182,9 @@ const Card = ({ onClick, selects, cartoon }: CardProps) => {
       ...pv,
       { ...data, column: "toWatch", id: data.mal_id },
     ]);
+    setMessage(`Added ${cartoon.title} to the list`);
+    setAdding(true);
+    setTimeout(() => setAdding(false), 500);
   };
 
   const modalData: ModalContextType | undefined = useContext(ModalContext);

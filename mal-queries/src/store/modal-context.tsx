@@ -170,16 +170,39 @@ const AnimeDetailModal: FC<AnimeDetailModalType> = ({
                   </button>
                   <button
                     onClick={() => {
-                      setSavedAnime((pv) => [
-                        ...pv,
-                        { ...cartoon, column: "toWatch", id: cartoon.mal_id },
-                      ]);
-                      setMessage(cartoon.title);
-                      setIsOpen(false);
-                      setAdding(true);
-                      setTimeout(() => {
-                        setAdding(false);
-                      }, 500);
+                      let success = false;
+                      setSavedAnime((pv) => {
+                        const find = pv.find(
+                          (anime) => anime.mal_id === cartoon.mal_id
+                        );
+                        if (find) {
+                          success = false;
+                          return pv;
+                        } else {
+                          success = true;
+                          return [
+                            ...pv,
+                            {
+                              ...cartoon,
+                              column: "toWatch",
+                              id: cartoon.mal_id,
+                            },
+                          ];
+                        }
+                      });
+                      if (success) {
+                        setMessage(`Added ${cartoon.title} to the list`);
+                        setIsOpen(false);
+                        setAdding(true);
+                        setTimeout(() => {
+                          setAdding(false);
+                        }, 500);
+                      } else {
+                        setMessage(`${cartoon.title} is already added`);
+                        setAdding(true);
+
+                        setTimeout(() => setAdding(false), 500);
+                      }
                     }}
                     className="flex items-center gap-1 font-mono justify-center bg-white hover:opacity-90 transition-opacity text-black font-semibold w-full py-2 rounded"
                   >
