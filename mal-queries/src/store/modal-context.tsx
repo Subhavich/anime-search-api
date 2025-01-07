@@ -110,7 +110,7 @@ const AnimeDetailModal: FC<AnimeDetailModalType> = ({
               animate={{ scale: 1, rotate: "0deg" }}
               exit={{ scale: 0, rotate: "0deg" }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-neutral-900 border border-neutral-500 p-6 rounded-lg w-full max-w-4xl shadow-xl cursor-default relative overflow-hidden"
+              className="bg-neutral-900 border m-6 sm:m-4 border-neutral-500 p-6 rounded-lg w-full max-w-4xl shadow-xl cursor-default relative overflow-hidden"
             >
               <div className="relative z-10 p-4">
                 <div className="grid grid-cols-12 min-h-36 gap-4">
@@ -131,36 +131,39 @@ const AnimeDetailModal: FC<AnimeDetailModalType> = ({
                     </div>
                   </div>
                   {/* right */}
-                  <div className="col-span-12 text-center sm:text-left sm:col-span-6 space-y-1 sm:space-y-4 font-mono">
+                  <div className="col-span-12 text-center sm:text-left sm:col-span-6 space-y-2 sm:space-y-4 font-mono">
                     {genres.length > 0 && (
                       <>
                         <p className="text-lg sm:text-2xl font-bold">TAGS</p>
                         <div className="flex gap-4 flex-wrap sm:justify-start justify-center">
                           {genres.map((genre: GenreType) => (
                             <span
-                              className="text-base sm:text-lg"
+                              className="text-sm sm:text-lg"
                               key={genre.name}
                             >
                               {genre.name.toUpperCase()}
                             </span>
                           ))}
+                          {genres.length === 0 && (
+                            <span className="text-sm sm:text-lg"> -- </span>
+                          )}
                         </div>
                       </>
                     )}
 
                     <p className="text-lg sm:text-2xl font-bold">SCORE</p>
-                    <div className="flex gap-2 justify-center sm:justify-start">
+                    <div className="text-sm flex gap-2 justify-center sm:justify-start">
                       <span>{score}</span>
                       <span>scored by {scored_by} users</span>
                     </div>
                     <p className="text-lg sm:text-2xl font-bold">DATE</p>
-                    <p>{aired.string}</p>
+                    <p className="text-sm">{aired.string}</p>
                     <p className="text-lg sm:text-2xl font-bold">TRAILER</p>
                     <div>
                       {trailer.embed_url ? (
                         <iframe
                           src={trailer.embed_url}
-                          className="rounded-2xl w-full aspect-video"
+                          className="mx-auto rounded-2xl w-full sm:h-auto h-36 aspect-video"
                         />
                       ) : (
                         "Trailer Data Not Found"
