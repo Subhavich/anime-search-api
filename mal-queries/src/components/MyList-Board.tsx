@@ -31,7 +31,7 @@ const Board = () => {
           <p>{anime.title}</p>
         ))}
       </div> */}
-      <div className="flex flex-col items-center sm:items-start sm:flex-row h-full w-full gap-3  p-12 max-w-5xl mx-auto">
+      <div className="grid grid-cols-12 grid-rows-2 sm:flex sm:items-start h-[720px] sm:h-full w-full gap-3 p-12 max-w-5xl mx-auto">
         <Column
           title="To Watch"
           headingColor="text-white"
@@ -189,9 +189,11 @@ const Column: FC<ColumnProps> = ({
 
   const filteredCards = cards.filter((c) => c.column === column);
   return (
-    <div className="w-56 shrink-0">
-      <div className="mb-3 flex items-center justify-between">
-        <h3 className={`font-medium ${headingColor}`}>{title}</h3>
+    <div className="col-span-4 w-28 sm:w-56 shrink-0">
+      <div className="mb-1 sm:mb-3 flex items-center justify-center gap-2 sm:justify-between sm:gap-0">
+        <h3 className={`text-xs sm:text-base font-medium ${headingColor}`}>
+          {title}
+        </h3>
         <span className="rounded text-sm text-neutral-400">
           {filteredCards.length}
         </span>
@@ -218,21 +220,14 @@ interface CardProp extends CardType {
   handleDragStart: Function;
 }
 
-const Card: FC<CardProp> = ({
-  title,
-  id,
-  column,
-  handleDragStart,
-
-  images,
-}) => {
+const Card: FC<CardProp> = ({ title, id, column, handleDragStart, images }) => {
   return (
     <>
       <DropIndicator beforeId={id.toString()} column={column} />
       <div
         draggable="true"
         onDragStart={(e) => handleDragStart(e, { title, id, column })}
-        className="brightness-50 hover:brightness-75 transition-all h-24 max-h-40 relative cursor-grab rounded border active:cursor-grabbing overflow-hidden"
+        className="brightness-50 hover:brightness-75 transition-all sm:h-24 max-h-40 relative cursor-grab rounded border active:cursor-grabbing overflow-hidden"
       >
         <img
           src={images.webp.image_url}
@@ -240,7 +235,7 @@ const Card: FC<CardProp> = ({
         />
 
         <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-        <p className="relative z-40 m-4 text-white font-semibold text-lg line-clamp-1">
+        <p className="relative z-40 m-4 text-white sm:font-semibold text-xs sm:text-lg line-clamp-1">
           {title}
         </p>
       </div>
@@ -285,7 +280,7 @@ const BurnBarrel: FC<BurnBarrelProps> = ({ setCards }) => {
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDragEnd}
-      className={`mt-10 grid h-56 w-56 shrink-0 place-content-center rounded border text-3xl ${
+      className={`col-span-12 mx-auto mt-10 grid h-56 w-56 shrink-0 place-content-center rounded border text-3xl ${
         active
           ? "border-red-800 bg-red-800/20 text-red-500"
           : "border-neutral-500 bg-neutral-500/20 text-neutral-500"
