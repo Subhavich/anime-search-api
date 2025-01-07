@@ -41,6 +41,7 @@ const SearchBar = () => {
   });
   const [tampered, setTampered] = useState(false);
   const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
   const startRef = useRef<HTMLInputElement>(null); // Ref for an input element
   const endRef = useRef<HTMLInputElement>(null); // Ref for an input element
@@ -87,6 +88,7 @@ const SearchBar = () => {
         const animeList = resData.data;
         console.log(resData);
         setAnimeList(animeList);
+        setTotalPages(resData.pagination.last_visible_page);
       } catch (err) {
         setAnimeList([]);
       } finally {
@@ -211,24 +213,26 @@ const SearchBar = () => {
           </button>
         </div>
       </div>
-      <div className="h-84">
+      <div className={`${tampered ? " min-h-96" : ""}`}>
+        {tampered && (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={page}
+            onPageChange={handlePageChange}
+          />
+        )}
         {!tampered && (
-          <div className="min-h-84 max-w-5xl mx-auto text-xl animate-bounce text-center ">
+          <div className=" max-w-5xl mx-auto text-xl animate-bounce text-center ">
             <p className="my-32">Set Your Search Parameters and Click SEARCH</p>
           </div>
         )}
         {isfetching && (
-          <div className=" max-w-5xl mx-auto text-xl animate-bounce text-center">
+          <div className="min-h-96  max-w-5xl mx-auto text-xl animate-pulse text-center">
             <p className="my-32">Loading</p>
           </div>
         )}
         {tampered && !isfetching && animeList.length > 0 && (
           <>
-            <Pagination
-              totalPages={8}
-              currentPage={page}
-              onPageChange={handlePageChange}
-            />
             <CardCarousel
               runningNumber={1}
               cartoons={animeList}

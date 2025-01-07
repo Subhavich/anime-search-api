@@ -35,7 +35,7 @@ const Pagination: React.FC<PaginationProps> = ({
         className={`px-3 py-1 rounded-md ${
           current === 1
             ? "text-gray-400 cursor-not-allowed"
-            : "text-blue-500 hover:bg-blue-100"
+            : "text-white hover:bg-blue-100"
         }`}
         onClick={() => handlePageChange(1)}
         disabled={current === 1}
@@ -48,7 +48,7 @@ const Pagination: React.FC<PaginationProps> = ({
         className={`px-3 py-1 rounded-md ${
           current === 1
             ? "text-gray-400 cursor-not-allowed"
-            : "text-blue-500 hover:bg-blue-100"
+            : "text-white hover:bg-blue-100"
         }`}
         onClick={() => handlePageChange(current - 1)}
         disabled={current === 1}
@@ -62,8 +62,8 @@ const Pagination: React.FC<PaginationProps> = ({
           key={page}
           className={`px-3 py-1 rounded-md ${
             page === current
-              ? "bg-blue-500 text-white"
-              : "text-blue-500 hover:bg-blue-100"
+              ? "bg-white text-black scale-125"
+              : "text-white hover:bg-blue-100"
           }`}
           onClick={() => {
             handlePageChange(page);
@@ -78,7 +78,7 @@ const Pagination: React.FC<PaginationProps> = ({
         className={`px-3 py-1 rounded-md ${
           current === totalPages
             ? "text-gray-400 cursor-not-allowed"
-            : "text-blue-500 hover:bg-blue-100"
+            : "text-white hover:bg-blue-100"
         }`}
         onClick={() => handlePageChange(current + 1)}
         disabled={current === totalPages}
@@ -91,7 +91,7 @@ const Pagination: React.FC<PaginationProps> = ({
         className={`px-3 py-1 rounded-md ${
           current === totalPages
             ? "text-gray-400 cursor-not-allowed"
-            : "text-blue-500 hover:bg-blue-100"
+            : "text-white hover:bg-blue-100"
         }`}
         onClick={() => handlePageChange(totalPages)}
         disabled={current === totalPages}
