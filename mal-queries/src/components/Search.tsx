@@ -1,14 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { fetchAnimeParams } from "../http";
 import CardCarousel from "./Carousel";
+import Pagination from "./Pagination";
 
-const generateQueryString = (params: {
-  start_date: string;
-  end_date: string;
-  status: string;
-  q: string;
-  type: string;
-}) => {
+const generateQueryString = (
+  params: {
+    start_date: string;
+    end_date: string;
+    status: string;
+    q: string;
+    type: string;
+  },
+  page: number
+) => {
   const queryString = Object.entries(params)
     .filter(([key, value]) => {
       if (key) {
@@ -20,8 +24,9 @@ const generateQueryString = (params: {
         `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
     )
     .join("&");
+  const pageParam = `page=${encodeURIComponent(page)}`;
 
-  return queryString ? `?${queryString}` : ""; // Return the query string with '?' or empty if no parameters
+  return queryString ? `?${queryString}&${pageParam}` : `?${pageParam}`;
 };
 
 const SearchBar = () => {
@@ -35,6 +40,7 @@ const SearchBar = () => {
     type: "",
   });
   const [tampered, setTampered] = useState(false);
+  const [page, setPage] = useState(1);
 
   const startRef = useRef<HTMLInputElement>(null); // Ref for an input element
   const endRef = useRef<HTMLInputElement>(null); // Ref for an input element
@@ -74,9 +80,12 @@ const SearchBar = () => {
     setIsFetching(true);
     const fetchList = async () => {
       try {
-        const resData = await fetchAnimeParams(generateQueryString(formData));
-        console.log(generateQueryString(formData));
+        const resData = await fetchAnimeParams(
+          generateQueryString(formData, page)
+        );
+        // console.log(generateQueryString(formData));
         const animeList = resData.data;
+        console.log(resData);
         setAnimeList(animeList);
       } catch (err) {
         setAnimeList([]);
@@ -85,8 +94,11 @@ const SearchBar = () => {
       }
     };
     fetchList();
-  }, [formData]);
+  }, [formData, page]);
 
+  const handlePageChange = (n: number) => {
+    setPage(n);
+  };
   return (
     <div className="text-md my-8 ">
       <div className="max-w-5xl mx-auto grid grid-cols-12 mb-12">
@@ -211,11 +223,18 @@ const SearchBar = () => {
           </div>
         )}
         {tampered && !isfetching && animeList.length > 0 && (
-          <CardCarousel
-            runningNumber={1}
-            cartoons={animeList}
-            isFetching={isfetching}
-          />
+          <>
+            <Pagination
+              totalPages={8}
+              currentPage={page}
+              onPageChange={handlePageChange}
+            />
+            <CardCarousel
+              runningNumber={1}
+              cartoons={animeList}
+              isFetching={isfetching}
+            />
+          </>
         )}
         {tampered && !isfetching && animeList.length === 0 && (
           <div className="max-w-5xl mx-auto">
